@@ -141,7 +141,7 @@
 
     </style>
 </head>
-<body class="bg-yellow-300 text-black selection:bg-black selection:text-yellow-300">
+<body class="bg-lime-600 text-black selection:bg-black selection:text-lime-300">
 
     <!-- HEADER / NAV --><header class="sticky top-0 z-50 bg-lime-600 border-b-4 border-black">
         <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -160,17 +160,41 @@
                 <a href="#about" class="bg-white px-4 py-2 font-bold hard-shadow btn-press text-sm hover:bg-[#4895EF]">/О НАС</a>
                 <a href="#contact" class="bg-black text-white px-4 py-2 font-bold hard-shadow btn-press text-sm hover:bg-violet-400 hover:text-black">/КОНТАКТЫ</a>
             </div>
-            <!-- Mobile Menu Button (placeholder) --><div class="md:hidden">
-                <button class="bg-white p-2 hard-shadow btn-press">
+            <!-- Mobile Menu Button --><div class="md:hidden">
+                <button id="mobile-menu-button" class="bg-white p-2 hard-shadow btn-press">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
                     </svg>
                 </button>
             </div>
         </nav>
+        <!-- Mobile Menu --><div id="mobile-menu" class="hidden md:hidden bg-lime-600 border-b-4 border-black">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-2 font-mono">
+                <a href="#projects" class="bg-white px-4 py-3 font-bold hard-shadow btn-press text-sm hover:bg-lime-400 text-center">/ПРОЕКТЫ</a>
+                <a href="#about" class="bg-white px-4 py-3 font-bold hard-shadow btn-press text-sm hover:bg-[#4895EF] text-center">/О НАС</a>
+                <a href="#contact" class="bg-black text-white px-4 py-3 font-bold hard-shadow btn-press text-sm hover:bg-violet-400 hover:text-black text-center">/КОНТАКТЫ</a>
+            </div>
+        </div>
     </header>
 
     <main>
+        <!-- HERO SECTION --><section class="w-full py-24 md:py-40 bg-[#4895EF] border-b-4 border-black overflow-hidden">
+            <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                <div class="md:col-span-2 space-y-6">
+                    <h1 class="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter break-words scroll-animate animate-slam-up">
+                        <span class="text-cyan-300">ДИЗАЙН. &nbsp;</span>
+                        <span class="text-lime-400">СЕРВИСЫ.</span>
+                        <span class="text-black">КОД.</span>
+                        <br>
+                    </h1>
+                    <p class="text-lg md:text-xl text-white max-w-2xl font-medium scroll-animate animate-slam-up" style="transition-delay: 100ms;">
+                        <span class="font-bold text-black bg-white px-1">Avocado Apps</span> — студия, которая создаёт приложения: быстрые, функциональные и по-настоящему приятные в использовании.
+                    </p>
+                    <div class="scroll-animate animate-slam-up" style="transition-delay: 200ms;">
+                        <a href="#projects" class="inline-block bg-black text-white text-xl font-bold border-4 border-black px-8 py-4 hard-shadow btn-press hover:bg-pink-500 hover:text-black">
+                            СМОТРЕТЬ ПРОЕКТЫ &darr;
+                        </a>
+                    </div>
         <!-- HERO SECTION --><section class="w-full py-24 md:py-40 bg-[#4895EF] border-b-4 border-black overflow-hidden">
             <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
                 <div class="md:col-span-2 space-y-6">
@@ -249,8 +273,26 @@
 
             <div class="project-scroll">
                     <div class="project-track">
+                        <div class="project-card-snap bg-white border-4 border-black hard-shadow card-pop rounded-lg overflow-hidden scroll-animate animate-pop-in w-[320px]" style="transition-delay: 1200ms;">
+                            <img src="https://storage.yandexcloud.net/avocado-apps/govza/govza-screens.png" alt="Скриншот приложения Govza Курьер" class="w-full h-72 object-cover object-top border-b-4 border-black" onerror="this.src='https://placehold.co/600x400/4ECDC4/000000?text=Govza'">
+                            <div class="p-6 flex flex-col h-full">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <img src="https://storage.yandexcloud.net/avocado-apps/govza/govza-icon.png" alt="Govza App Icon" class="w-16 h-16 rounded-xl flex-shrink-0">
+                                    <div class="flex flex-wrap gap-2 font-mono">
+                                        <span class="text-xs font-bold bg-blue-500 text-white px-2 py-1 rounded-full">iOS</span>
+                                        <span class="text-xs font-bold bg-green-600 text-white px-2 py-1 rounded-full">Android</span>
+                                        <span class="text-xs font-bold bg-sky-500 text-white px-2 py-1 rounded-full">Flutter</span>
+                                        <span class="text-xs font-bold bg-purple-600 text-white px-2 py-1 rounded-full">Дизайн</span>
+                                    </div>
+                                </div>
+                                <h3 class="text-2xl font-black mb-2">Govza Курьер</h3>
+                                <p class="mb-4">Сервер и кроссплатформенное приложение для курьерской службы Govza.</p>
+                                <a class="inline-block bg-black text-white text-sm font-bold px-4 py-2 hard-shadow btn-press hover:bg-yellow-300 hover:text-black mt-auto">Скоро в App Store</a>
+                            </div>
+                        </div>
+
                         <div class="project-card-snap bg-white border-4 border-black hard-shadow card-pop rounded-lg overflow-hidden scroll-animate animate-pop-in w-[320px]" style="transition-delay: 300ms;">
-                            <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/1d/26/5f/1d265f5f-a383-ce04-38c0-4fc0fa25873e/screen_1_en.jpg/460x998bb.webp" alt="Скриншот приложения Azkar" class="w-full h-72 object-cover object-top border-b-4 border-black" onerror="this.src='https://placehold.co/600x400/0000FF/FFFFFF?text=Azkar'">
+                            <img src="https://storage.yandexcloud.net/avocado-apps/govza/azkar-app.jpg" alt="Скриншот приложения Azkar" class="w-full h-72 object-cover object-top border-b-4 border-black" onerror="this.src='https://placehold.co/600x400/0000FF/FFFFFF?text=Azkar'">
                             <div class="p-6 flex flex-col h-full">
                                 <div class="flex items-center gap-3 mb-3">
                                     <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/2f/00/35/2f003504-1e73-84a7-083f-f8eb450176de/Placeholder.mill/400x400bb-75.webp" alt="Azkar App Icon" class="w-16 h-16 rounded-xl flex-shrink-0">
@@ -262,7 +304,7 @@
                                     </div>
                                 </div>
                                 <h3 class="text-2xl font-black mb-2">Azkar</h3>
-                                <p class="mb-4">Мультиплатформенное приложение для чтения Азкаров с уникальным функционалом.</p>
+                                <p class="mb-4">Кроссплатформенное приложение для чтения Азкаров с уникальным функционалом.</p>
                                 <a href="https://apple.co/41O1pzQ" target="_blank" rel="noopener noreferrer" class="inline-block bg-black text-white text-sm font-bold px-4 py-2 hard-shadow btn-press hover:bg-yellow-300 hover:text-black mt-auto">Открыть в App Store</a>
                             </div>
                         </div>
@@ -274,6 +316,8 @@
                                     <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/37/f6/44/37f64480-a60e-3faf-c325-c69ab2a8fb65/AppIcon-0-0-1x_U007emarketing-0-0-0-6-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/400x400ia-75.webp" alt="Baitech App Icon" class="w-16 h-16 rounded-xl flex-shrink-0">
                                     <div class="flex flex-wrap gap-2 font-mono">
                                         <span class="text-xs font-bold bg-sky-500 text-white px-2 py-1 rounded-full">Flutter</span>
+                                        <span class="text-xs font-bold bg-blue-500 text-white px-2 py-1 rounded-full">iOS</span>
+                                        <span class="text-xs font-bold bg-green-600 text-white px-2 py-1 rounded-full">Android</span>
                                         <span class="text-xs font-bold bg-blue-700 text-white px-2 py-1 rounded-full">API Design</span>
                                     </div>
                                 </div>
@@ -395,8 +439,8 @@
                     <h2 class="text-5xl md:text-7xl font-black tracking-tighter mb-6">
                         /О НАС
                     </h2>
-                    <div class="w-full aspect-square bg-lime-400 border-4 border-black hard-shadow-lg rounded-lg rotate-2 flex items-center justify-center p-8">
-                        <h3 class="text-4xl md:text-6xl font-black font-mono tracking-tighter text-center leading-tight">
+                    <div class="w-full aspect-square bg-sky-400 border-4 border-black hard-shadow-lg rounded-lg rotate-2 flex items-center justify-center p-8">
+                        <h3 class="text-4xl text-white md:text-6xl font-black font-mono tracking-tighter text-center leading-tight">
                             10 ЛЕТ<br>СОЗДАЁМ<br>ПРИЛОЖЕНИЯ
                         </h3>
                     </div>
@@ -426,7 +470,7 @@
             <div class="container mx-auto px-4">
                 <div class="max-w-3xl mx-auto bg-white border-4 border-black hard-shadow-lg p-8 md:p-12 rounded-lg scroll-animate animate-pop-in">
                     <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-4">
-                        Хотите обсудить продукт? Пишите.
+                        Хотите обсудить проект? Пишите.
                     </h2>
                     <p class="text-lg mb-8">
                     </p>
@@ -434,15 +478,12 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono font-bold text-center">
                         <a href="https://bit.ly/43tFnTC" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-between bg-lime-300 border-4 border-black rounded-lg p-6 hard-shadow card-pop h-full">
                             <span class="text-sm tracking-wide mb-4">/WHATSAPP</span>
-                            <span class="text-xs text-black mt-4">+79286404000</span>
                         </a>
                         <a href="https://bit.ly/3JXrnuG" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-between bg-cyan-300 border-4 border-black rounded-lg p-6 hard-shadow card-pop h-full">
                             <span class="text-sm tracking-wide mb-4">/TELEGRAM</span>
-                            <span class="text-xs text-black mt-4">@avoc0der</span>
                         </a>
                         <a href="https://bit.ly/4pczlz1" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-between bg-pink-300 border-4 border-black rounded-lg p-6 hard-shadow card-pop h-full">
                             <span class="text-sm tracking-wide mb-4">/INSTAGRAM</span>
-                            <span class="text-xs text-black mt-4">@avoc0der</span>
                         </a>
                     </div>
                 </div>
@@ -454,7 +495,7 @@
     <!-- FOOTER --><footer class="w-full py-12 bg-black text-white">
         <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
             <div class="text-2xl font-black tracking-tighter mb-4 md:mb-0">
-                Avocado Apps
+                🥑 Avocado Apps
             </div>
             <div class="text-sm font-mono">
                 &copy; 2025. Все права нарушены.
@@ -495,6 +536,24 @@
 
                 observer.observe(el);
             });
+
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+
+                // Close mobile menu when clicking on a menu item
+                const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+                mobileMenuLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
         });
     </script>
 
