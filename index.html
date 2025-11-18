@@ -17,7 +17,7 @@
     <!-- Firebase SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+        import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
         const firebaseConfig = {
             apiKey: "AIzaSyDGbTm0oZOhUtfwTf_G97amgvoA3CJbPg0",
             authDomain: "avocadoappswebsite.firebaseapp.com",
@@ -29,6 +29,20 @@
         };
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
+
+        // Track all link clicks
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a');
+            if (link) {
+                const url = link.href;
+                const text = link.innerText || link.textContent || link.getAttribute('aria-label') || 'no_text';
+
+                logEvent(analytics, 'link_click', {
+                    link_url: url,
+                    link_text: text.trim().substring(0, 100) // Limit text length
+                });
+            }
+        });
     </script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 
@@ -195,9 +209,11 @@
             flex-shrink: 0;
         }
 
-        .mask-gradient {
-            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+        @media (min-width: 768px) {
+            .mask-gradient {
+                mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+                -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            }
         }
     </style>
 </head>
@@ -255,21 +271,23 @@
         <!-- HERO -->
         <section class="py-24 md:py-32 container mx-auto px-6 flex flex-col items-center text-center">
 
-            <div class="flex flex-col gap-2 md:gap-6 mb-12 items-start md:items-center">
+            <div class="flex flex-col gap-2 md:gap-6 mb-12 items-start">
                 <h1
-                    class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.1] text-black flex items-center gap-4 md:gap-6">
+                    class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[1.1] text-black flex items-center gap-4 md:gap-6">
                     <iconify-icon icon="solar:palette-bold"
                         class="text-4xl md:text-7xl text-orange-500 flex-shrink-0"></iconify-icon>
                     <span>Дизайн.</span>
                 </h1>
+
                 <h1
-                    class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.1] text-gray-400 flex items-center gap-4 md:gap-6 ml-12 md:ml-0">
+                    class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[1.1] text-gray-400 flex items-center gap-4 md:gap-6">
                     <iconify-icon icon="solar:code-square-bold"
                         class="text-4xl md:text-7xl text-blue-500 flex-shrink-0"></iconify-icon>
                     <span>Код.</span>
                 </h1>
+
                 <h1
-                    class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight text-black flex items-center gap-4 md:gap-6 ml-24 md:ml-0 py-2">
+                    class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-tight text-black flex items-center gap-4 md:gap-6 py-2">
                     <iconify-icon icon="solar:smartphone-2-bold"
                         class="text-4xl md:text-7xl text-emerald-500 flex-shrink-0"></iconify-icon>
                     <span class="text-gradient">Продукт.</span>
@@ -335,7 +353,7 @@
         <!-- PROJECTS -->
         <section id="projects" class="py-24">
             <div class="overflow-x-auto md:overflow-hidden mask-gradient no-scrollbar mx-6 md:mx-0">
-                <div id="projects-track" class="flex gap-4 animate-scroll-left">
+                <div id="projects-track" class="flex gap-4 animate-scroll-left p-4">
                     <!-- Project Card New -->
                     <a href="https://t.me/kutubist_bot" target="_blank"
                         class="patio-card group overflow-hidden flex flex-col">
@@ -401,6 +419,7 @@
                             </div>
                         </div>
                     </a>
+
                     <!-- Project Card 1 -->
                     <div class="patio-card group overflow-hidden flex flex-col">
                         <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
@@ -439,7 +458,7 @@
                     </div>
 
                     <!-- Project Card 2 -->
-                    <a href="https://apple.co/41O1pzQ" target="_blank"
+                    <a href="https://apps.apple.com/app/azkar/id1511423586" target="_blank"
                         class="patio-card group overflow-hidden flex flex-col">
                         <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
                             <img src="https://storage.yandexcloud.net/avocado-apps/govza/azkar-app.jpg" alt="Azkar"
@@ -477,7 +496,7 @@
                     </a>
 
                     <!-- Project Card 3 -->
-                    <a href="https://apple.co/4pd0txI" target="_blank"
+                    <a href="https://apps.apple.com/app/baitech/id6444344786" target="_blank"
                         class="patio-card group overflow-hidden flex flex-col">
                         <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
                             <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource126/v4/2d/fc/f7/2dfcf730-a70c-fc2c-1d76-38eea5006d7e/88c9979c-d1b5-4d1c-9a61-5aecdd1b4cc7_1.png/460x996bb.webp"
@@ -515,7 +534,7 @@
                     </a>
 
                     <!-- Project Card 4 -->
-                    <a href="https://apple.co/3LLh1yr" target="_blank"
+                    <a href="https://apps.apple.com/app/id1170337374" target="_blank"
                         class="patio-card group overflow-hidden flex flex-col">
                         <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
                             <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple113/v4/f1/62/fc/f162fc29-b851-3c53-d2b9-999a6186753a/pr_source.png/460x996bb.webp"
@@ -545,7 +564,7 @@
                     </a>
 
                     <!-- Project Card 5 -->
-                    <a href="https://apple.co/4nXhuek" target="_blank"
+                    <a href="https://apps.apple.com/app/id1524782738" target="_blank"
                         class="patio-card group overflow-hidden flex flex-col">
                         <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
                             <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource125/v4/21/61/9b/21619b9d-5710-98ea-27be-799ccce5718d/37c5e990-840b-4675-a32d-2403a7ccc6ab_1_6.5.jpg/460x996bb.webp"
@@ -579,7 +598,7 @@
                     </a>
 
                     <!-- Project Card 6 -->
-                    <a href="https://apple.co/4o4WXET" target="_blank"
+                    <a href="https://apps.apple.com/app/stone-md-kidney-stones/id1111168247" target="_blank"
                         class="patio-card group overflow-hidden flex flex-col">
                         <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
                             <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/a0/b9/9f/a0b99fa0-a364-1169-f2ea-624c0277fea8/mzl.euecdjpj.png/460x996bb.webp"
@@ -593,7 +612,8 @@
                                     class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
                                 <h3 class="font-bold text-lg text-black">Stone MD</h3>
                             </div>
-                            <p class="text-gray-700 text-sm mb-6 flex-grow">Приложение для отслеживания здоровья при
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Обновление приложения для отслеживания
+                                здоровья при
                                 болезнях, связанных с наличием камней в почках.</p>
                             <div class="flex flex-wrap gap-2">
                                 <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
@@ -1031,7 +1051,7 @@
                     </a>
 
                     <!-- Project Card 8 -->
-                    <a href="https://apple.co/49o97VI" target="_blank"
+                    <a href="https://apps.apple.com/app/id1330848409" target="_blank"
                         class="patio-card group overflow-hidden flex flex-col">
                         <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
                             <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple114/v4/f3/5e/ef/f35eef72-8208-d232-a411-838c38b73a52/pr_source.png/460x996bb.webp"
@@ -1069,7 +1089,7 @@
                     </a>
 
                     <!-- Project Card 9 -->
-                    <a href="https://apple.co/3WZSqbD" target="_blank"
+                    <a href="https://apps.apple.com/app/darulhadis/id1358711055" target="_blank"
                         class="patio-card group overflow-hidden flex flex-col">
                         <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
                             <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple114/v4/ef/f7/de/eff7de50-d12d-7e71-ad50-66d51caea992/mzl.towxrbfm.jpg/460x996bb.webp"
@@ -1115,10 +1135,10 @@
         </section>
 
         <!-- ABOUT -->
-        <section id="about" class="py-24 bg-[#f9f9f9] border-y border-[#e0e0e0]">
+        <section id="about" class="py-44 bg-[#f9f9f9] border-y border-[#e0e0e0]">
             <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
                 <div>
-                    <h2 class="text-4xl md:text-6xl font-bold tracking-tighter mb-8 text-black">
+                    <h2 class="text-4xl md:text-6xl font-bold tracking-tighter mb-4 text-black">
                         Технологии<br>
                         <span class="text-gray-500">и</span>
                         эстетика
@@ -1207,7 +1227,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                <a href="https://bit.ly/43tFnTC" target="_blank"
+                <a href="https://wa.me/+79286404000" target="_blank"
                     class="patio-card p-8 flex flex-col items-center justify-center gap-4 group">
                     <div
                         class="w-12 h-12 flex items-center justify-center rounded-full bg-[#25D366]/10 text-[#25D366] group-hover:bg-[#25D366] group-hover:text-white transition-colors">
@@ -1219,7 +1239,7 @@
                     </div>
                     <span class="font-bold group-hover:text-black transition-colors text-black">WhatsApp</span>
                 </a>
-                <a href="https://bit.ly/3JXrnuG" target="_blank"
+                <a href="https://t.me/avoc0der" target="_blank"
                     class="patio-card p-8 flex flex-col items-center justify-center gap-4 group">
                     <div
                         class="w-12 h-12 flex items-center justify-center rounded-full bg-[#229ED9]/10 text-[#229ED9] group-hover:bg-[#229ED9] group-hover:text-white transition-colors">
@@ -1231,7 +1251,7 @@
                     </div>
                     <span class="font-bold group-hover:text-black transition-colors text-black">Telegram</span>
                 </a>
-                <a href="https://bit.ly/4pczlz1" target="_blank"
+                <a href="https://instagram.com/avoc0der" target="_blank"
                     class="patio-card p-8 flex flex-col items-center justify-center gap-4 group">
                     <div
                         class="w-12 h-12 flex items-center justify-center rounded-full bg-[#E1306C]/10 text-[#E1306C] group-hover:bg-[#E1306C] group-hover:text-white transition-colors">
@@ -1300,11 +1320,11 @@
                     <div class="flex flex-col gap-4 md:items-end">
                         <h3 class="font-bold text-black text-lg">Соцсети</h3>
                         <div class="flex flex-col gap-2 md:items-end">
-                            <a href="https://bit.ly/43tFnTC" target="_blank"
+                            <a href="https://wa.me/+79286404000" target="_blank"
                                 class="text-gray-500 hover:text-black transition-colors font-medium">WhatsApp</a>
-                            <a href="https://bit.ly/3JXrnuG" target="_blank"
+                            <a href="https://t.me/avoc0der" target="_blank"
                                 class="text-gray-500 hover:text-black transition-colors font-medium">Telegram</a>
-                            <a href="https://bit.ly/4pczlz1" target="_blank"
+                            <a href="https://instagram.com/avoc0der" target="_blank"
                                 class="text-gray-500 hover:text-black transition-colors font-medium">Instagram</a>
                         </div>
                     </div>
