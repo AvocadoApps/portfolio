@@ -1,16 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avocado Apps // мобильные приложения</title>
-    <!-- Tailwind CSS CDN --><script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Google Fonts (Inter for body, DM Mono for accents) --><link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><path d=%22M50 5 C 30 5, 10 35, 10 60 C 10 82, 28 95, 50 95 C 72 95, 90 82, 90 60 C 90 35, 70 5, 50 5 Z%22 fill=%22%23386641%22/><path d=%22M50 15 C 35 15, 20 38, 20 60 C 20 78, 32 88, 50 88 C 68 88, 80 78, 80 60 C 80 38, 65 15, 50 15 Z%22 fill=%22%23D4E157%22/><circle cx=%2250%22 cy=%2265%22 r=%2216%22 fill=%22%236D4C41%22/><circle cx=%2245%22 cy=%2260%22 r=%224%22 fill=%22%23FFFFFF%22 fill-opacity=%220.3%22/></svg>">
 
-    <!-- Firebase SDKs for Analytics -->
+    <!-- Firebase SDKs -->
     <script type="module">
-        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
         const firebaseConfig = {
@@ -25,518 +28,1296 @@
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
     </script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 
     <style>
-        /* Base styles */
-        html {
-            scroll-behavior: smooth;
-        }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #259f3d; /* bg-yellow-300 */
-            color: #000;
-            overflow-x: hidden; /* Prevent horizontal scroll from animations */
-        }
-        
-        /* Monospace font for accents */
-        .font-mono {
-            font-family: 'DM Mono', monospace;
+            background-color: #ffffff;
+            background-image:
+                linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #000000;
         }
 
-        /* Hard shadow helper class */
-        .hard-shadow {
-            box-shadow: 4px 4px 0px #000;
-        }
-        .hard-shadow-lg {
-             box-shadow: 8px 8px 0px #000;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
 
-        /* Button "press" effect */
-        .btn-press {
-            transition: all 0.15s ease-out;
-        }
-        .btn-press:hover {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px #000;
-        }
-        .btn-press:active {
-            transform: translate(4px, 4px);
-            box-shadow: 0px 0px 0px #000;
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
         }
 
-        /* Card "pop" effect */
-        .card-pop {
-            transition: all 0.15s ease-out;
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
         }
-        .card-pop:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 8px 8px 0px #000;
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #bbb;
         }
-        
-        /* Marquee animation */
+
+        /* Patio-style Card */
+        .patio-card {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+        }
+
+        .patio-card:hover {
+            border-color: #d0d0d0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Marquee Animation */
         @keyframes marquee {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-50%); }
+            0% {
+                transform: translateX(0%);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
         }
+
         .animate-marquee {
-            animation: marquee 25s linear infinite;
+            animation: marquee 30s linear infinite;
         }
 
-        /* Scroll animation classes */
-        .scroll-animate {
-            opacity: 0;
-            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.215, 0.610, 0.355, 1);
-        }
-        
-        /* "Slam" up effect */
-        .scroll-animate.animate-slam-up {
-            transform: translateY(80px);
-        }
-        .scroll-animate.animate-slam-up.is-visible {
-            opacity: 1;
-            transform: translateY(0);
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(to right, #333, #999);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* "Pop" in effect */
-        .scroll-animate.animate-pop-in {
-            transform: scale(0.8);
-        }
-        .scroll-animate.animate-pop-in.is-visible {
-            opacity: 1;
-            transform: scale(1);
-        }
-        
-        /* "Fade in" (default) */
-        .scroll-animate.is-visible {
-            opacity: 1;
-        }
-
-        .project-scroll {
-            overflow-x: auto;
-            overflow-y: hidden;
-            -webkit-overflow-scrolling: touch;
-            scroll-behavior: smooth;
-            padding: 1rem 0;
+        .patio-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 8px;
+            border-radius: 100px;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            color: #333;
+            font-size: 10px;
+            font-weight: 500;
+            line-height: 1;
+            transition: all 0.2s;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            gap: 4px;
         }
 
-        /* Hide scrollbar but keep functionality */
-        .project-scroll::-webkit-scrollbar {
-            display: none;
-        }
-        .project-scroll {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+        .patio-tag iconify-icon {
+            font-size: 12px;
         }
 
-        .project-track {
-            display: flex;
-            gap: 1.5rem;
-            padding-left: 1rem;
-            padding-right: 1rem;
+        @media (min-width: 768px) {
+            .patio-tag {
+                padding: 6px 12px;
+                font-size: 12px;
+                gap: 8px;
+            }
+
+            .patio-tag iconify-icon {
+                font-size: 16px;
+            }
         }
 
-        .project-card-snap {
+        .patio-tag:hover {
+            border-color: #000;
+            color: #000;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Infinite Scroll */
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .animate-scroll-left {
+            animation: scroll-left 60s linear infinite;
+            width: max-content;
+        }
+
+        #projects-track .patio-card {
+            min-width: 320px;
+            width: 320px;
             flex-shrink: 0;
         }
 
+        .mask-gradient {
+            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+        }
     </style>
 </head>
-<body class="bg-lime-600 text-black selection:bg-black selection:text-lime-300">
 
-    <!-- HEADER / NAV --><header class="sticky top-0 z-50 bg-lime-600 border-b-4 border-black">
-        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="#" class="text-3xl font-black tracking-tighter hard-shadow-lg bg-white border-4 border-black px-3 py-1 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="w-8 h-8" fill="none">
-                    <ellipse cx="32" cy="34" rx="20" ry="26" fill="#8db539" stroke="#000" stroke-width="2.5"/>
-                    <ellipse cx="32" cy="34" rx="14" ry="20" fill="#c8e68c"/>
-                    <circle cx="32" cy="34" r="8" fill="#6b4423" stroke="#000" stroke-width="2"/>
-                    <ellipse cx="32" cy="12" rx="6" ry="4" fill="#6b4423" stroke="#000" stroke-width="2" transform="rotate(-25 32 12)"/>
-                    <path d="M32 8 Q28 12, 32 16" stroke="#8db539" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                </svg>
-                Avocado Apps
+<body class="antialiased selection:bg-lime-500 selection:text-white">
+
+    <!-- HEADER -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-[#e0e0e0]">
+        <div class="container mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+                        class="w-full h-full transition-transform group-hover:scale-110" fill="none">
+                        <path
+                            d="M50 5 C 30 5, 10 35, 10 60 C 10 82, 28 95, 50 95 C 72 95, 90 82, 90 60 C 90 35, 70 5, 50 5 Z"
+                            fill="#386641" />
+                        <path
+                            d="M50 15 C 35 15, 20 38, 20 60 C 20 78, 32 88, 50 88 C 68 88, 80 78, 80 60 C 80 38, 65 15, 50 15 Z"
+                            fill="#D4E157" />
+                        <circle cx="50" cy="65" r="16" fill="#6D4C41" />
+                        <circle cx="45" cy="60" r="4" fill="#FFFFFF" fill-opacity="0.3" />
+                    </svg>
+                </div>
+                <span class="font-bold text-lg tracking-tight text-black">Avocado Apps</span>
             </a>
-            <div class="hidden md:flex items-center space-x-2 font-mono">
-                <a href="#projects" class="bg-white px-4 py-2 font-bold hard-shadow btn-press text-sm hover:bg-lime-400">/ПРОЕКТЫ</a>
-                <a href="#about" class="bg-white px-4 py-2 font-bold hard-shadow btn-press text-sm hover:bg-[#4895EF]">/О НАС</a>
-                <a href="#contact" class="bg-black text-white px-4 py-2 font-bold hard-shadow btn-press text-sm hover:bg-violet-400 hover:text-black">/КОНТАКТЫ</a>
-            </div>
-            <!-- Mobile Menu Button --><div class="md:hidden">
-                <button id="mobile-menu-button" class="bg-white p-2 hard-shadow btn-press">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+                <a href="#projects" class="hover:text-black transition-colors">Проекты</a>
+                <a href="#about" class="hover:text-black transition-colors">О нас</a>
+                <a href="#contact" class="hover:text-black transition-colors">Контакты</a>
+            </nav>
+
+            <div class="md:hidden">
+                <button id="mobile-menu-btn" class="text-black p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7" />
                     </svg>
                 </button>
             </div>
-        </nav>
-        <!-- Mobile Menu --><div id="mobile-menu" class="hidden md:hidden bg-lime-600 border-b-4 border-black">
-            <div class="container mx-auto px-4 py-4 flex flex-col space-y-2 font-mono">
-                <a href="#projects" class="bg-white px-4 py-3 font-bold hard-shadow btn-press text-sm hover:bg-lime-400 text-center">/ПРОЕКТЫ</a>
-                <a href="#about" class="bg-white px-4 py-3 font-bold hard-shadow btn-press text-sm hover:bg-[#4895EF] text-center">/О НАС</a>
-                <a href="#contact" class="bg-black text-white px-4 py-3 font-bold hard-shadow btn-press text-sm hover:bg-violet-400 hover:text-black text-center">/КОНТАКТЫ</a>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-[#e0e0e0]">
+            <div class="container mx-auto px-6 py-4 flex flex-col gap-4 text-sm font-medium text-gray-600">
+                <a href="#projects" class="hover:text-black transition-colors block py-2">Проекты</a>
+                <a href="#about" class="hover:text-black transition-colors block py-2">О нас</a>
+                <a href="#contact" class="hover:text-black transition-colors block py-2">Контакты</a>
             </div>
         </div>
     </header>
 
-    <main>
-        <!-- HERO SECTION --><section class="w-full py-24 md:py-40 bg-[#4895EF] border-b-4 border-black overflow-hidden">
-            <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-                <div class="md:col-span-2 space-y-6">
-                    <h1 class="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter break-words scroll-animate animate-slam-up">
-                        <span class="text-cyan-300">ДИЗАЙН. &nbsp;</span>
-                        <span class="text-lime-400">СЕРВИСЫ.</span>
-                        <span class="text-black">КОД.</span>
-                        <br>
-                    </h1>
-                    <p class="text-lg md:text-xl text-white max-w-2xl font-medium scroll-animate animate-slam-up" style="transition-delay: 100ms;">
-                        <span class="font-bold text-black bg-white px-1">Avocado Apps</span> — студия, которая создаёт приложения: быстрые, функциональные и по-настоящему приятные в использовании.
-                    </p>
-                    <div class="scroll-animate animate-slam-up" style="transition-delay: 200ms;">
-                        <a href="#projects" class="inline-block bg-black text-white text-xl font-bold border-4 border-black px-8 py-4 hard-shadow btn-press hover:bg-pink-500 hover:text-black">
-                            СМОТРЕТЬ ПРОЕКТЫ &darr;
-                        </a>
-                    </div>
+    <main class="pt-16">
+        <!-- HERO -->
+        <section class="py-24 md:py-32 container mx-auto px-6 flex flex-col items-center text-center">
+
+            <div class="flex flex-col gap-2 md:gap-6 mb-12 items-start md:items-center">
+                <h1
+                    class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.1] text-black flex items-center gap-4 md:gap-6">
+                    <iconify-icon icon="solar:palette-bold"
+                        class="text-4xl md:text-7xl text-orange-500 flex-shrink-0"></iconify-icon>
+                    <span>Дизайн.</span>
+                </h1>
+                <h1
+                    class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.1] text-gray-400 flex items-center gap-4 md:gap-6 ml-12 md:ml-0">
+                    <iconify-icon icon="solar:code-square-bold"
+                        class="text-4xl md:text-7xl text-blue-500 flex-shrink-0"></iconify-icon>
+                    <span>Код.</span>
+                </h1>
+                <h1
+                    class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight text-black flex items-center gap-4 md:gap-6 ml-24 md:ml-0 py-2">
+                    <iconify-icon icon="solar:smartphone-2-bold"
+                        class="text-4xl md:text-7xl text-emerald-500 flex-shrink-0"></iconify-icon>
+                    <span class="text-gradient">Продукт.</span>
+                </h1>
+            </div>
+
+            <p class="text-xl md:text-2xl text-gray-600 max-w-2xl mx-auto leading-relaxed font-medium">
+                Создаём быстрые, стабильные и интуитивно понятные приложения для бизнеса и пользователей.
+            </p>
         </section>
 
-        <!-- MARQUEE SECTION --><section class="w-full py-4 bg-[#4CC9F0] text-white border-b-4 border-black overflow-hidden">
-            <div class="relative flex overflow-hidden">
-                <div class="flex animate-marquee whitespace-nowrap">
-                    <span class="text-2xl font-black mx-4">SWIFTUI</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">KOTLIN</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">FLUTTER</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">REACT NATIVE</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">UI/UX ДИЗАЙН</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">EXPO</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">OPENAPI</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">GRAPHQL</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">FIREBASE</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">SUPABASE</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
+        <!-- MARQUEE -->
+        <section class="py-8 border-y border-[#e0e0e0] bg-white overflow-hidden">
+            <div class="flex animate-marquee whitespace-nowrap">
+                <div class="flex gap-12 items-center text-gray-500 font-medium text-sm tracking-widest uppercase">
+                    <span class="flex items-center gap-2"><iconify-icon icon="simple-icons:swift"></iconify-icon>
+                        SwiftUI</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon icon="simple-icons:kotlin"></iconify-icon>
+                        Kotlin</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon icon="simple-icons:flutter"></iconify-icon>
+                        Flutter</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon icon="simple-icons:react"></iconify-icon> React
+                        Native</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon icon="lucide:pen-tool"></iconify-icon> UI/UX
+                        Дизайн</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon icon="simple-icons:expo"></iconify-icon>
+                        Expo</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon
+                            icon="simple-icons:openapiinitiative"></iconify-icon> OpenAPI</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon icon="simple-icons:graphql"></iconify-icon>
+                        GraphQL</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon icon="simple-icons:firebase"></iconify-icon>
+                        Firebase</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon icon="simple-icons:supabase"></iconify-icon>
+                        Supabase</span><span>•</span>
                 </div>
-                <!-- Duplicate for seamless loop --><div class="flex animate-marquee whitespace-nowrap" aria-hidden="true">
-                    <span class="text-2xl font-black mx-4">SWIFTUI</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">KOTLIN</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">FLUTTER</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">REACT NATIVE</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">UI/UX ДИЗАЙН</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">EXPO</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">OPENAPI</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">GRAPHQL</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">FIREBASE</span>
-                    <span class="text-2xl font-black mx-4 text-yellow-300">*</span>
-                    <span class="text-2xl font-black mx-4">SUPABASE</span>
+                <!-- Duplicate -->
+                <div class="flex gap-12 items-center text-gray-500 font-medium text-sm tracking-widest uppercase ml-12">
+                    <span class="flex items-center gap-2"><iconify-icon icon="simple-icons:swift"></iconify-icon>
+                        SwiftUI</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon icon="simple-icons:kotlin"></iconify-icon>
+                        Kotlin</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon icon="simple-icons:flutter"></iconify-icon>
+                        Flutter</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon icon="simple-icons:react"></iconify-icon> React
+                        Native</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon icon="lucide:pen-tool"></iconify-icon> UI/UX
+                        Дизайн</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon icon="simple-icons:expo"></iconify-icon>
+                        Expo</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon
+                            icon="simple-icons:openapiinitiative"></iconify-icon> OpenAPI</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon icon="simple-icons:graphql"></iconify-icon>
+                        GraphQL</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon icon="simple-icons:firebase"></iconify-icon>
+                        Firebase</span><span>•</span>
+                    <span class="flex items-center gap-2"><iconify-icon icon="simple-icons:supabase"></iconify-icon>
+                        Supabase</span><span>•</span>
                 </div>
             </div>
         </section>
 
-        <!-- PROJECTS SECTION --><section id="projects" class="w-full py-16 md:py-24 bg-lime-400 border-b-4 border-black">
-            <div class="container mx-auto px-4">
-                <h2 class="text-5xl md:text-7xl font-black tracking-tighter mb-12 scroll-animate animate-slam-up">
-                    /ПРОЕКТЫ
-                </h2>
-            </div>
-
-            <div class="project-scroll">
-                    <div class="project-track">
-                        <div class="project-card-snap bg-white border-4 border-black hard-shadow card-pop rounded-lg overflow-hidden scroll-animate animate-pop-in w-[320px]" style="transition-delay: 1200ms;">
-                            <img src="https://storage.yandexcloud.net/avocado-apps/govza/govza-screens.png" alt="Скриншот приложения Govza Курьер" class="w-full h-72 object-cover object-top border-b-4 border-black" onerror="this.src='https://placehold.co/600x400/4ECDC4/000000?text=Govza'">
-                            <div class="p-6 flex flex-col h-full">
-                                <div class="flex items-center gap-3 mb-3">
-                                    <img src="https://storage.yandexcloud.net/avocado-apps/govza/govza-icon.png" alt="Govza App Icon" class="w-16 h-16 rounded-xl flex-shrink-0">
-                                    <div class="flex flex-wrap gap-2 font-mono">
-                                        <span class="text-xs font-bold bg-blue-500 text-white px-2 py-1 rounded-full">iOS</span>
-                                        <span class="text-xs font-bold bg-green-600 text-white px-2 py-1 rounded-full">Android</span>
-                                        <span class="text-xs font-bold bg-sky-500 text-white px-2 py-1 rounded-full">Flutter</span>
-                                        <span class="text-xs font-bold bg-purple-600 text-white px-2 py-1 rounded-full">Дизайн</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-2xl font-black mb-2">Govza Курьер</h3>
-                                <p class="mb-4">Сервер и кроссплатформенное приложение для курьерской службы Govza.</p>
-                                <a class="inline-block bg-black text-white text-sm font-bold px-4 py-2 hard-shadow btn-press hover:bg-yellow-300 hover:text-black mt-auto">Скоро в App Store</a>
+        <!-- PROJECTS -->
+        <section id="projects" class="py-24">
+            <div class="overflow-hidden mask-gradient">
+                <div id="projects-track" class="flex gap-4 animate-scroll-left">
+                    <!-- Project Card New -->
+                    <a href="https://t.me/kutubist_bot" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://storage.yandexcloud.net/avocado-apps/govza/kutubist.png" alt="Кутубист"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Kutubist'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://storage.yandexcloud.net/avocado-apps/govza/kutubist-icon.jpeg"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">Кутубист</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-4">Telegram бот для поиска книг.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-sky-50 !border-sky-200 !text-sky-700">
+                                    <iconify-icon icon="simple-icons:telegram" class="text-lg"></iconify-icon>
+                                    Telegram
+                                </span>
+                                <span class="patio-tag !bg-slate-100 !border-slate-300 !text-slate-700">
+                                    <iconify-icon icon="lucide:bot" class="text-lg"></iconify-icon>
+                                    Bot
+                                </span>
                             </div>
                         </div>
-
-                        <div class="project-card-snap bg-white border-4 border-black hard-shadow card-pop rounded-lg overflow-hidden scroll-animate animate-pop-in w-[320px]" style="transition-delay: 300ms;">
-                            <img src="https://storage.yandexcloud.net/avocado-apps/govza/azkar-app.jpg" alt="Скриншот приложения Azkar" class="w-full h-72 object-cover object-top border-b-4 border-black" onerror="this.src='https://placehold.co/600x400/0000FF/FFFFFF?text=Azkar'">
-                            <div class="p-6 flex flex-col h-full">
-                                <div class="flex items-center gap-3 mb-3">
-                                    <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/2f/00/35/2f003504-1e73-84a7-083f-f8eb450176de/Placeholder.mill/400x400bb-75.webp" alt="Azkar App Icon" class="w-16 h-16 rounded-xl flex-shrink-0">
-                                    <div class="flex flex-wrap gap-2 font-mono">
-                                        <span class="text-xs font-bold bg-blue-500 text-white px-2 py-1 rounded-full">iOS</span>
-                                        <span class="text-xs font-bold bg-green-600 text-white px-2 py-1 rounded-full">Android</span>
-                                        <span class="text-xs font-bold bg-blue-700 text-white px-2 py-1 rounded-full">API</span>
-                                        <span class="text-xs font-bold bg-purple-600 text-white px-2 py-1 rounded-full">Дизайн</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-2xl font-black mb-2">Azkar</h3>
-                                <p class="mb-4">Кроссплатформенное приложение для чтения Азкаров с уникальным функционалом.</p>
-                                <a href="https://apple.co/41O1pzQ" target="_blank" rel="noopener noreferrer" class="inline-block bg-black text-white text-sm font-bold px-4 py-2 hard-shadow btn-press hover:bg-yellow-300 hover:text-black mt-auto">Открыть в App Store</a>
+                    </a>
+                    <!-- Project Card New 2 -->
+                    <a href="https://apple.co/3Zf7u1k" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource115/v4/93/34/42/9334429a-b046-c96b-49b9-5b2a6f6cf5b0/6c43d192-9a54-42b6-85df-e183c2260a7f_6.5-inch.jpg/460x996bb.webp"
+                                alt="200 вопросов"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=200+Questions'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple115/v4/d8/73/15/d873151f-52d0-b52c-e904-73fb496ef38b/AppIcon-0-0-1x_U007emarketing-0-0-0-6-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/400x400ia-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">200 вопросов</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-4">Приложение для изучения вероучения в формате
+                                вопрос-ответ.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="simple-icons:android" class="text-lg"></iconify-icon>
+                                    Android
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:pen-tool" class="text-lg"></iconify-icon>
+                                    UI/UX
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:shapes" class="text-lg"></iconify-icon>
+                                    Logo
+                                </span>
                             </div>
                         </div>
-
-                        <div class="project-card-snap bg-white border-4 border-black hard-shadow card-pop rounded-lg overflow-hidden scroll-animate animate-pop-in w-[320px]" style="transition-delay: 900ms;">
-                            <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource126/v4/2d/fc/f7/2dfcf730-a70c-fc2c-1d76-38eea5006d7e/88c9979c-d1b5-4d1c-9a61-5aecdd1b4cc7_1.png/460x996bb.webp" alt="Скриншот приложения Baitech" class="w-full h-72 object-cover object-top border-b-4 border-black" onerror="this.src='https://placehold.co/600x400/4ECDC4/000000?text=Baitech'">
-                            <div class="p-6 flex flex-col h-full">
-                                <div class="flex items-center gap-3 mb-3">
-                                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/37/f6/44/37f64480-a60e-3faf-c325-c69ab2a8fb65/AppIcon-0-0-1x_U007emarketing-0-0-0-6-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/400x400ia-75.webp" alt="Baitech App Icon" class="w-16 h-16 rounded-xl flex-shrink-0">
-                                    <div class="flex flex-wrap gap-2 font-mono">
-                                        <span class="text-xs font-bold bg-sky-500 text-white px-2 py-1 rounded-full">Flutter</span>
-                                        <span class="text-xs font-bold bg-blue-500 text-white px-2 py-1 rounded-full">iOS</span>
-                                        <span class="text-xs font-bold bg-green-600 text-white px-2 py-1 rounded-full">Android</span>
-                                        <span class="text-xs font-bold bg-blue-700 text-white px-2 py-1 rounded-full">API Design</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-2xl font-black mb-2">Baitech</h3>
-                                <p class="mb-4">Приложение для поиска недвижимости в Катаре.</p>
-                                <a href="https://apple.co/4pd0txI" target="_blank" rel="noopener noreferrer" class="inline-block bg-black text-white text-sm font-bold px-4 py-2 hard-shadow btn-press hover:bg-yellow-300 hover:text-black mt-auto">Открыть в App Store</a>
-                            </div>
+                    </a>
+                    <!-- Project Card 1 -->
+                    <div class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://storage.yandexcloud.net/avocado-apps/govza/govza-screens.png" alt="Govza"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Govza'">
                         </div>
-
-                        <div class="project-card-snap bg-white border-4 border-black hard-shadow card-pop rounded-lg overflow-hidden scroll-animate animate-pop-in w-[320px]">
-                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple113/v4/f1/62/fc/f162fc29-b851-3c53-d2b9-999a6186753a/pr_source.png/460x996bb.webp" alt="Скриншот приложения mySalah" class="w-full h-72 object-cover object-top border-b-4 border-black" onerror="this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=MySalah+UK'">
-                            <div class="p-6 flex flex-col h-full">
-                                <div class="flex items-center gap-3 mb-3">
-                                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple113/v4/f4/ee/06/f4ee0608-7e75-2f8b-9307-9db5697e818c/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-85-220.png/400x400ia-75.webp" alt="mySalah App Icon" class="w-16 h-16 rounded-xl flex-shrink-0">
-                                    <div class="flex flex-wrap gap-2 font-mono">
-                                        <span class="text-xs font-bold bg-blue-500 text-white px-2 py-1 rounded-full">iOS</span>
-                                        <span class="text-xs font-bold bg-blue-700 text-white px-2 py-1 rounded-full">API</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-2xl font-black mb-2">mySalah</h3>
-                                <p class="mb-4">Простое и красивое приложение с расписанием молитв.</p>
-                                <a href="https://apple.co/3LLh1yr" target="_blank" rel="noopener noreferrer" class="inline-block bg-black text-white text-sm font-bold px-4 py-2 hard-shadow btn-press hover:bg-yellow-300 hover:text-black mt-auto">Открыть в App Store</a>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://storage.yandexcloud.net/avocado-apps/govza/govza-icon.png"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">Govza Курьер</h3>
                             </div>
-                        </div>
-
-                        <div class="project-card-snap bg-white border-4 border-black hard-shadow card-pop rounded-lg overflow-hidden scroll-animate animate-pop-in w-[320px]" style="transition-delay: 1050ms;">
-                            <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource125/v4/21/61/9b/21619b9d-5710-98ea-27be-799ccce5718d/37c5e990-840b-4675-a32d-2403a7ccc6ab_1_6.5.jpg/460x996bb.webp" alt="Скриншот приложения Дар уль-Хадис" class="w-full h-72 object-cover object-top border-b-4 border-black" onerror="this.src='https://placehold.co/600x400/FF9F43/000000?text=Dar+ul-Hadis'">
-                            <div class="p-6 flex flex-col h-full">
-                                <div class="flex items-center gap-3 mb-3">
-                                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple122/v4/7e/bb/6b/7ebb6b6d-4235-ccd3-faa2-9d7dfbb7be86/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/400x400ia-75.webp" alt="Дар уль-Хадис App Icon" class="w-16 h-16 rounded-xl flex-shrink-0">
-                                    <div class="flex flex-wrap gap-2 font-mono">
-                                        <span class="text-xs font-bold bg-blue-500 text-white px-2 py-1 rounded-full">iOS</span>
-                                        <span class="text-xs font-bold bg-green-600 text-white px-2 py-1 rounded-full">Android</span>
-                                        <span class="text-xs font-bold bg-purple-600 text-white px-2 py-1 rounded-full">Дизайн</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-2xl font-black mb-2">Дар уль-Хадис</h3>
-                                <p class="mb-4">Приложение издательского дома с возможностью просмотра и покупки электронных книг.</p>
-                                <a href="https://apple.co/4nXhuek" target="_blank" rel="noopener noreferrer" class="inline-block bg-black text-white text-sm font-bold px-4 py-2 hard-shadow btn-press hover:bg-yellow-300 hover:text-black mt-auto">Открыть в App Store</a>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Сервер и кроссплатформенное приложение для
+                                курьерской службы Govza.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="simple-icons:android" class="text-lg"></iconify-icon>
+                                    Android
+                                </span>
+                                <span class="patio-tag !bg-sky-50 !border-sky-200 !text-sky-700">
+                                    <iconify-icon icon="simple-icons:flutter" class="text-lg"></iconify-icon>
+                                    Flutter
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:pen-tool" class="text-lg"></iconify-icon>
+                                    UI/UX
+                                </span>
                             </div>
-                        </div>
-
-                        <div class="project-card-snap bg-white border-4 border-black hard-shadow card-pop rounded-lg overflow-hidden scroll-animate animate-pop-in w-[320px]" style="transition-delay: 150ms;">
-                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/a0/b9/9f/a0b99fa0-a364-1169-f2ea-624c0277fea8/mzl.euecdjpj.png/460x996bb.webp" alt="Скриншот приложения Stone MD" class="w-full h-72 object-cover object-top border-b-4 border-black" onerror="this.src='https://placehold.co/600x400/00FF00/000000?text=Stone+MD'">
-                            <div class="p-6 flex flex-col h-full">
-                                <div class="flex items-center gap-3 mb-3">
-                                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/41/e3/a4/41e3a4a5-ab27-f1b6-7c24-92edc9791f5b/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/400x400ia-75.webp" alt="Stone MD App Icon" class="w-16 h-16 rounded-xl flex-shrink-0">
-                                    <div class="flex flex-wrap gap-2 font-mono">
-                                        <span class="text-xs font-bold bg-blue-500 text-white px-2 py-1 rounded-full">iOS</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-2xl font-black mb-2">Stone MD</h3>
-                                <p class="mb-4">Приложение для отслеживания здоровья при болезнях, связанных с наличием камней в почках.</p>
-                                <a href="https://apple.co/4o4WXET" target="_blank" rel="noopener noreferrer" class="inline-block bg-black text-white text-sm font-bold px-4 py-2 hard-shadow btn-press hover:bg-yellow-300 hover:text-black mt-auto">Открыть в App Store</a>
-                            </div>
-                        </div>
-
-                        <div class="project-card-snap bg-white border-4 border-black hard-shadow card-pop rounded-lg overflow-hidden scroll-animate animate-pop-in w-[320px]" style="transition-delay: 600ms;">
-                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple123/v4/89/ad/5f/89ad5f57-16dc-4953-6e8a-5332d369d7d5/pr_source.png/460x996bb.webp" alt="Скриншот приложения Сахих аль-Бухари" class="w-full h-72 object-cover object-top border-b-4 border-black" onerror="this.src='https://placehold.co/600x400/00FFFF/000000?text=Sahih'">
-                            <div class="p-6 flex flex-col h-full">
-                                <div class="flex items-center gap-3 mb-3">
-                                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple113/v4/d9/21/e2/d921e233-bbe3-dbb0-8bc9-7ff11dc90278/AppIcon-0-1x_U007emarketing-0-0-85-220-7.png/400x400ia-75.webp" alt="Sahih al-Bukhari App Icon" class="w-16 h-16 rounded-xl flex-shrink-0">
-                                    <div class="flex flex-wrap gap-2 font-mono">
-                                        <span class="text-xs font-bold bg-blue-500 text-white px-2 py-1 rounded-full">iOS</span>
-                                        <span class="text-xs font-bold bg-green-600 text-white px-2 py-1 rounded-full">Android</span>
-                                        <span class="text-xs font-bold bg-purple-600 text-white px-2 py-1 rounded-full">Дизайн</span>
-                                        <span class="text-xs font-bold bg-orange-500 text-white px-2 py-1 rounded-full">Logo</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-2xl font-black mb-2">«Сахих» имама аль-Бухари</h3>
-                                <p class="mb-4">Сборник достоверных хадисов имама аль-Бухари с удобным поиском и читалкой.</p>
-                                <a href="https://apple.co/49XJ7AD" target="_blank" rel="noopener noreferrer" class="inline-block bg-black text-white text-sm font-bold px-4 py-2 hard-shadow btn-press hover:bg-yellow-300 hover:text-black mt-auto">Открыть в App Store</a>
-                            </div>
-                        </div>
-
-                         <div class="project-card-snap bg-white border-4 border-black hard-shadow card-pop rounded-lg overflow-hidden scroll-animate animate-pop-in w-[320px]" style="transition-delay: 450ms;">
-                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple114/v4/f3/5e/ef/f35eef72-8208-d232-a411-838c38b73a52/pr_source.png/460x996bb.webp" alt="Скриншот приложения Arabia" class="w-full h-72 object-cover object-top border-b-4 border-black" onerror="this.src='https://placehold.co/600x400/FF00FF/FFFFFF?text=Arabia'">
-                            <div class="p-6 flex flex-col h-full">
-                                <div class="flex items-center gap-3 mb-3">
-                                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple114/v4/12/a5/ae/12a5aed1-4d0d-726f-ce6e-8cb563850be4/AppIcon-0-1x_U007emarketing-0-0-85-220-0-7.png/400x400ia-75.webp" alt="Arabia App Icon" class="w-16 h-16 rounded-xl flex-shrink-0">
-                                    <div class="flex flex-wrap gap-2 font-mono">
-                                        <span class="text-xs font-bold bg-blue-500 text-white px-2 py-1 rounded-full">iOS</span>
-                                        <span class="text-xs font-bold bg-blue-700 text-white px-2 py-1 rounded-full">API</span>
-                                        <span class="text-xs font-bold bg-purple-600 text-white px-2 py-1 rounded-full">Дизайн</span>
-                                        <span class="text-xs font-bold bg-orange-500 text-white px-2 py-1 rounded-full">Logo</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-2xl font-black mb-2">Arabia</h3>
-                                <p class="mb-4">Книга «Арабский перед тобой» в красивом приложении.</p>
-                                <a href="https://apple.co/49o97VI" target="_blank" rel="noopener noreferrer" class="inline-block bg-black text-white text-sm font-bold px-4 py-2 hard-shadow btn-press hover:bg-yellow-300 hover:text-black mt-auto">Открыть в App Store</a>
-                            </div>
-                        </div>
-
-                        <div class="project-card-snap bg-white border-4 border-black hard-shadow card-pop rounded-lg overflow-hidden scroll-animate animate-pop-in w-[320px]" style="transition-delay: 750ms;">
-                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple114/v4/ef/f7/de/eff7de50-d12d-7e71-ad50-66d51caea992/mzl.towxrbfm.jpg/460x996bb.webp" alt="Скриншот приложения Darulhadis" class="w-full h-72 object-cover object-top border-b-4 border-black" onerror="this.src='https://placehold.co/600x400/FF6B6B/FFFFFF?text=Darulhadis'">
-                            <div class="p-6 flex flex-col h-full">
-                                <div class="flex items-center gap-3 mb-3">
-                                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple114/v4/1d/4d/25/1d4d25e3-6863-1a5a-d711-a57e496ce993/AppIcon-0-1x_U007emarketing-0-0-85-220-0-7.png/400x400ia-75.webp" alt="Darulhadis App Icon" class="w-16 h-16 rounded-xl flex-shrink-0">
-                                    <div class="flex flex-wrap gap-2 font-mono">
-                                        <span class="text-xs font-bold bg-blue-500 text-white px-2 py-1 rounded-full">iOS</span>
-                                        <span class="text-xs font-bold bg-green-600 text-white px-2 py-1 rounded-full">Android</span>
-                                        <span class="text-xs font-bold bg-blue-700 text-white px-2 py-1 rounded-full">API</span>
-                                        <span class="text-xs font-bold bg-purple-600 text-white px-2 py-1 rounded-full">Дизайн</span>
-                                        <span class="text-xs font-bold bg-orange-500 text-white px-2 py-1 rounded-full">Logo</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-2xl font-black mb-2">Darulhadis</h3>
-                                <p class="mb-4">Аудио-уроки по исламским наукам: вероучение, фикх, жизнеописание, Коран, хадисы, арабский язык и др.</p>
-                                <a href="https://apple.co/3WZSqbD" target="_blank" rel="noopener noreferrer" class="inline-block bg-black text-white text-sm font-bold px-4 py-2 hard-shadow btn-press hover:bg-yellow-300 hover:text-black mt-auto">Открыть в App Store</a>
-                            </div>
+                            <span class="text-xs font-medium text-gray-500">Скоро в App Store</span>
                         </div>
                     </div>
+
+                    <!-- Project Card 2 -->
+                    <a href="https://apple.co/41O1pzQ" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://storage.yandexcloud.net/avocado-apps/govza/azkar-app.jpg" alt="Azkar"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Azkar'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/2f/00/35/2f003504-1e73-84a7-083f-f8eb450176de/Placeholder.mill/400x400bb-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">Azkar</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Кроссплатформенное приложение для чтения
+                                Азкаров
+                                с уникальным функционалом.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="simple-icons:android" class="text-lg"></iconify-icon>
+                                    Android
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="lucide:server" class="text-lg"></iconify-icon>
+                                    API
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:pen-tool" class="text-lg"></iconify-icon>
+                                    UI/UX
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project Card 3 -->
+                    <a href="https://apple.co/4pd0txI" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource126/v4/2d/fc/f7/2dfcf730-a70c-fc2c-1d76-38eea5006d7e/88c9979c-d1b5-4d1c-9a61-5aecdd1b4cc7_1.png/460x996bb.webp"
+                                alt="Baitech"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Baitech'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/37/f6/44/37f64480-a60e-3faf-c325-c69ab2a8fb65/AppIcon-0-0-1x_U007emarketing-0-0-0-6-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/400x400ia-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">Baitech</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Приложение для поиска недвижимости в Катаре.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-sky-50 !border-sky-200 !text-sky-700">
+                                    <iconify-icon icon="simple-icons:flutter" class="text-lg"></iconify-icon>
+                                    Flutter
+                                </span>
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="simple-icons:android" class="text-lg"></iconify-icon>
+                                    Android
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="lucide:server" class="text-lg"></iconify-icon>
+                                    API Design
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project Card 4 -->
+                    <a href="https://apple.co/3LLh1yr" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple113/v4/f1/62/fc/f162fc29-b851-3c53-d2b9-999a6186753a/pr_source.png/460x996bb.webp"
+                                alt="mySalah"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=mySalah'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple113/v4/f4/ee/06/f4ee0608-7e75-2f8b-9307-9db5697e818c/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-85-220.png/400x400ia-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">mySalah</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Простое и красивое приложение с расписанием
+                                молитв.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="lucide:server" class="text-lg"></iconify-icon>
+                                    API
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project Card 5 -->
+                    <a href="https://apple.co/4nXhuek" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource125/v4/21/61/9b/21619b9d-5710-98ea-27be-799ccce5718d/37c5e990-840b-4675-a32d-2403a7ccc6ab_1_6.5.jpg/460x996bb.webp"
+                                alt="Dar ul-Hadis"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Dar+ul-Hadis'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple122/v4/7e/bb/6b/7ebb6b6d-4235-ccd3-faa2-9d7dfbb7be86/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/400x400ia-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">Дар уль-Хадис</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Приложение издательского дома с возможностью
+                                просмотра и покупки электронных книг.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="simple-icons:android" class="text-lg"></iconify-icon>
+                                    Android
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:pen-tool" class="text-lg"></iconify-icon>
+                                    UI/UX
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project Card 6 -->
+                    <a href="https://apple.co/4o4WXET" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/a0/b9/9f/a0b99fa0-a364-1169-f2ea-624c0277fea8/mzl.euecdjpj.png/460x996bb.webp"
+                                alt="Stone MD"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Stone+MD'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/41/e3/a4/41e3a4a5-ab27-f1b6-7c24-92edc9791f5b/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/400x400ia-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">Stone MD</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Приложение для отслеживания здоровья при
+                                болезнях, связанных с наличием камней в почках.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project Card 7 -->
+                    <a href="https://apple.co/49XJ7AD" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple123/v4/89/ad/5f/89ad5f57-16dc-4953-6e8a-5332d369d7d5/pr_source.png/460x996bb.webp"
+                                alt="Sahih"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Sahih'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple113/v4/d9/21/e2/d921e233-bbe3-dbb0-8bc9-7ff11dc90278/AppIcon-0-1x_U007emarketing-0-0-85-220-7.png/400x400ia-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">«Сахих» имама аль-Бухари</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Сборник достоверных хадисов имама аль-Бухари
+                                с
+                                удобным поиском и читалкой.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="simple-icons:android" class="text-lg"></iconify-icon>
+                                    Android
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:pen-tool" class="text-lg"></iconify-icon>
+                                    UI/UX
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:shapes" class="text-lg"></iconify-icon>
+                                    Logo
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project Card 8 -->
+                    <a href="https://apple.co/49o97VI" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple114/v4/f3/5e/ef/f35eef72-8208-d232-a411-838c38b73a52/pr_source.png/460x996bb.webp"
+                                alt="Arabia"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Arabia'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple114/v4/12/a5/ae/12a5aed1-4d0d-726f-ce6e-8cb563850be4/AppIcon-0-1x_U007emarketing-0-0-85-220-0-7.png/400x400ia-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">Arabia</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Книга «Арабский перед тобой» в красивом
+                                приложении.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="lucide:server" class="text-lg"></iconify-icon>
+                                    API
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:pen-tool" class="text-lg"></iconify-icon>
+                                    UI/UX
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:shapes" class="text-lg"></iconify-icon>
+                                    Logo
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project Card 9 -->
+                    <a href="https://apple.co/3WZSqbD" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple114/v4/ef/f7/de/eff7de50-d12d-7e71-ad50-66d51caea992/mzl.towxrbfm.jpg/460x996bb.webp"
+                                alt="Darulhadis"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Darulhadis'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple114/v4/1d/4d/25/1d4d25e3-6863-1a5a-d711-a57e496ce993/AppIcon-0-1x_U007emarketing-0-0-85-220-0-7.png/400x400ia-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">Darulhadis</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Аудио-уроки по исламским наукам: вероучение,
+                                фикх, жизнеописание, Коран, хадисы, арабский язык и др.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="simple-icons:android" class="text-lg"></iconify-icon>
+                                    Android
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="lucide:server" class="text-lg"></iconify-icon>
+                                    API
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:pen-tool" class="text-lg"></iconify-icon>
+                                    UI/UX
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:shapes" class="text-lg"></iconify-icon>
+                                    Logo
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project Card New -->
+                    <a href="https://t.me/kutubist_bot" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://storage.yandexcloud.net/avocado-apps/govza/kutubist.png" alt="Кутубист"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Kutubist'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://storage.yandexcloud.net/avocado-apps/govza/kutubist-icon.jpeg"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">Кутубист</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-4">Telegram бот для поиска книг.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-sky-50 !border-sky-200 !text-sky-700">
+                                    <iconify-icon icon="simple-icons:telegram" class="text-lg"></iconify-icon>
+                                    Telegram
+                                </span>
+                                <span class="patio-tag !bg-slate-100 !border-slate-300 !text-slate-700">
+                                    <iconify-icon icon="lucide:bot" class="text-lg"></iconify-icon>
+                                    Bot
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                    <!-- Project Card New 2 -->
+                    <a href="https://apple.co/3Zf7u1k" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource115/v4/93/34/42/9334429a-b046-c96b-49b9-5b2a6f6cf5b0/6c43d192-9a54-42b6-85df-e183c2260a7f_6.5-inch.jpg/460x996bb.webp"
+                                alt="200 вопросов"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=200+Questions'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple115/v4/d8/73/15/d873151f-52d0-b52c-e904-73fb496ef38b/AppIcon-0-0-1x_U007emarketing-0-0-0-6-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/400x400ia-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">200 вопросов</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-4">Приложение для изучения вероучения в формате
+                                вопрос-ответ.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="simple-icons:android" class="text-lg"></iconify-icon>
+                                    Android
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:pen-tool" class="text-lg"></iconify-icon>
+                                    UI/UX
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:shapes" class="text-lg"></iconify-icon>
+                                    Logo
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                    <!-- Project Card 1 -->
+                    <div class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://storage.yandexcloud.net/avocado-apps/govza/govza-screens.png" alt="Govza"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Govza'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://storage.yandexcloud.net/avocado-apps/govza/govza-icon.png"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">Govza Курьер</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Сервер и кроссплатформенное приложение для
+                                курьерской службы Govza.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="simple-icons:android" class="text-lg"></iconify-icon>
+                                    Android
+                                </span>
+                                <span class="patio-tag !bg-sky-50 !border-sky-200 !text-sky-700">
+                                    <iconify-icon icon="simple-icons:flutter" class="text-lg"></iconify-icon>
+                                    Flutter
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:pen-tool" class="text-lg"></iconify-icon>
+                                    UI/UX
+                                </span>
+                            </div>
+                            <span class="text-xs font-medium text-gray-500">Скоро в App Store</span>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 2 -->
+                    <a href="https://apple.co/41O1pzQ" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://storage.yandexcloud.net/avocado-apps/govza/azkar-app.jpg" alt="Azkar"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Azkar'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/2f/00/35/2f003504-1e73-84a7-083f-f8eb450176de/Placeholder.mill/400x400bb-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">Azkar</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Кроссплатформенное приложение для чтения
+                                Азкаров
+                                с уникальным функционалом.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="simple-icons:android" class="text-lg"></iconify-icon>
+                                    Android
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="lucide:server" class="text-lg"></iconify-icon>
+                                    API
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:pen-tool" class="text-lg"></iconify-icon>
+                                    UI/UX
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project Card 3 -->
+                    <a href="https://apple.co/4pd0txI" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource126/v4/2d/fc/f7/2dfcf730-a70c-fc2c-1d76-38eea5006d7e/88c9979c-d1b5-4d1c-9a61-5aecdd1b4cc7_1.png/460x996bb.webp"
+                                alt="Baitech"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Baitech'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/37/f6/44/37f64480-a60e-3faf-c325-c69ab2a8fb65/AppIcon-0-0-1x_U007emarketing-0-0-0-6-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/400x400ia-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">Baitech</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Приложение для поиска недвижимости в Катаре.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-sky-50 !border-sky-200 !text-sky-700">
+                                    <iconify-icon icon="simple-icons:flutter" class="text-lg"></iconify-icon>
+                                    Flutter
+                                </span>
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="simple-icons:android" class="text-lg"></iconify-icon>
+                                    Android
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="lucide:server" class="text-lg"></iconify-icon>
+                                    API Design
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project Card 4 -->
+                    <a href="https://apple.co/3LLh1yr" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple113/v4/f1/62/fc/f162fc29-b851-3c53-d2b9-999a6186753a/pr_source.png/460x996bb.webp"
+                                alt="mySalah"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=mySalah'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple113/v4/f4/ee/06/f4ee0608-7e75-2f8b-9307-9db5697e818c/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-85-220.png/400x400ia-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">mySalah</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Простое и красивое приложение с расписанием
+                                молитв.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="lucide:server" class="text-lg"></iconify-icon>
+                                    API
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project Card 5 -->
+                    <a href="https://apple.co/4nXhuek" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource125/v4/21/61/9b/21619b9d-5710-98ea-27be-799ccce5718d/37c5e990-840b-4675-a32d-2403a7ccc6ab_1_6.5.jpg/460x996bb.webp"
+                                alt="Dar ul-Hadis"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Dar+ul-Hadis'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple122/v4/7e/bb/6b/7ebb6b6d-4235-ccd3-faa2-9d7dfbb7be86/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/400x400ia-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">Дар уль-Хадис</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Приложение издательского дома с возможностью
+                                просмотра и покупки электронных книг.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="simple-icons:android" class="text-lg"></iconify-icon>
+                                    Android
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:pen-tool" class="text-lg"></iconify-icon>
+                                    UI/UX
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project Card 6 -->
+                    <a href="https://apple.co/4o4WXET" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/a0/b9/9f/a0b99fa0-a364-1169-f2ea-624c0277fea8/mzl.euecdjpj.png/460x996bb.webp"
+                                alt="Stone MD"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Stone+MD'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/41/e3/a4/41e3a4a5-ab27-f1b6-7c24-92edc9791f5b/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/400x400ia-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">Stone MD</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Приложение для отслеживания здоровья при
+                                болезнях, связанных с наличием камней в почках.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project Card 7 -->
+                    <a href="https://apple.co/49XJ7AD" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple123/v4/89/ad/5f/89ad5f57-16dc-4953-6e8a-5332d369d7d5/pr_source.png/460x996bb.webp"
+                                alt="Sahih"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Sahih'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple113/v4/d9/21/e2/d921e233-bbe3-dbb0-8bc9-7ff11dc90278/AppIcon-0-1x_U007emarketing-0-0-85-220-7.png/400x400ia-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">«Сахих» имама аль-Бухари</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Сборник достоверных хадисов имама аль-Бухари
+                                с
+                                удобным поиском и читалкой.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="simple-icons:android" class="text-lg"></iconify-icon>
+                                    Android
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:pen-tool" class="text-lg"></iconify-icon>
+                                    UI/UX
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:shapes" class="text-lg"></iconify-icon>
+                                    Logo
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project Card 8 -->
+                    <a href="https://apple.co/49o97VI" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple114/v4/f3/5e/ef/f35eef72-8208-d232-a411-838c38b73a52/pr_source.png/460x996bb.webp"
+                                alt="Arabia"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Arabia'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple114/v4/12/a5/ae/12a5aed1-4d0d-726f-ce6e-8cb563850be4/AppIcon-0-1x_U007emarketing-0-0-85-220-0-7.png/400x400ia-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">Arabia</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Книга «Арабский перед тобой» в красивом
+                                приложении.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="lucide:server" class="text-lg"></iconify-icon>
+                                    API
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:pen-tool" class="text-lg"></iconify-icon>
+                                    UI/UX
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:shapes" class="text-lg"></iconify-icon>
+                                    Logo
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project Card 9 -->
+                    <a href="https://apple.co/3WZSqbD" target="_blank"
+                        class="patio-card group overflow-hidden flex flex-col">
+                        <div class="aspect-[4/3] overflow-hidden border-b border-[#e0e0e0]">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple114/v4/ef/f7/de/eff7de50-d12d-7e71-ad50-66d51caea992/mzl.towxrbfm.jpg/460x996bb.webp"
+                                alt="Darulhadis"
+                                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/f0f0f0/999?text=Darulhadis'">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple114/v4/1d/4d/25/1d4d25e3-6863-1a5a-d711-a57e496ce993/AppIcon-0-1x_U007emarketing-0-0-85-220-0-7.png/400x400ia-75.webp"
+                                    class="w-10 h-10 rounded-lg bg-[#f0f0f0]" alt="Icon">
+                                <h3 class="font-bold text-lg text-black">Darulhadis</h3>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-6 flex-grow">Аудио-уроки по исламским наукам: вероучение,
+                                фикх, жизнеописание, Коран, хадисы, арабский язык и др.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                                    <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                                    iOS
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="simple-icons:android" class="text-lg"></iconify-icon>
+                                    Android
+                                </span>
+                                <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                                    <iconify-icon icon="lucide:server" class="text-lg"></iconify-icon>
+                                    API
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:pen-tool" class="text-lg"></iconify-icon>
+                                    UI/UX
+                                </span>
+                                <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                                    <iconify-icon icon="lucide:shapes" class="text-lg"></iconify-icon>
+                                    Logo
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
                 </div>
+            </div>
         </section>
 
-        <!-- ABOUT SECTION --><section id="about" class="w-full py-16 md:py-24 bg-[#4895EF] border-b-4 border-black">
-            <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-                <div class="scroll-animate animate-slam-up">
-                    <h2 class="text-5xl md:text-7xl font-black tracking-tighter mb-6">
-                        /О НАС
+        <!-- ABOUT -->
+        <section id="about" class="py-24 bg-[#f9f9f9] border-y border-[#e0e0e0]">
+            <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-4xl md:text-6xl font-bold tracking-tighter mb-8 text-black">
+                        Технологии<br>
+                        <span class="text-gray-500">и</span>
+                        эстетика
                     </h2>
-                    <div class="w-full aspect-square bg-sky-400 border-4 border-black hard-shadow-lg rounded-lg rotate-2 flex items-center justify-center p-8">
-                        <h3 class="text-4xl text-white md:text-6xl font-black font-mono tracking-tighter text-center leading-tight">
-                            10 ЛЕТ<br>СОЗДАЁМ<br>ПРИЛОЖЕНИЯ
-                        </h3>
-                    </div>
                 </div>
-                <div class="space-y-6 text-base md:text-lg font-medium pt-0 md:pt-24 scroll-animate animate-slam-up" style="transition-delay: 150ms;">
+                <div class="space-y-6 text-lg text-gray-700 leading-relaxed">
                     <p>
-                        Мы считаем, что приложения должны быть не только полезны, но и приятны в использовании. Делаем акцент на <span class="bg-white font-bold text-blue-500 px-1">чистую архитектуру,</span> <span class="bg-cyan-600 font-bold text-white px-1">высокую скорость</span> работы и <span class="bg-indigo-600 font-bold text-white px-1">интерфейсы,</span> которые <span class="bg-indigo-600 font-bold text-white px-1">интуитивно понятны.</span>
+                        Мы считаем, что приложения должны быть не только полезны, но и приятны в использовании. Делаем
+                        акцент на <span class="text-black font-medium">чистую архитектуру</span>, <span
+                            class="text-black font-medium">высокую скорость</span> работы и <span
+                            class="text-black font-medium">интерфейсы</span>, которые интуитивно понятны.
                     </p>
                     <p>
-                        Мы свободно работаем со всем мобильным стеком. В нашем наборе инструментов:
+                        Мы свободно работаем со всем мобильным стеком.
                     </p>
-                    <ul class="list-disc list-inside space-y-2 font-mono font-bold">
-                        <li>SwiftUI и UIKit</li>
-                        <li>Kotlin</li>
-                        <li>Flutter и Dart</li>
-                        <li>React Native и Expo</li>
-                        <li>Firebase, Supabase и self-hosted решения</li>
-                    </ul>
-                    <p>
-                        Когда мы не пишем код, разбираем другие приложения, экспериментируем с новыми технологиями или ищем идеальный эспрессо.
-                    </p>
+                    <div class="flex flex-wrap gap-3 text-sm font-medium text-gray-800">
+                        <!-- SwiftUI -->
+                        <span class="patio-tag !bg-orange-50 !border-orange-200 !text-orange-700">
+                            <iconify-icon icon="simple-icons:swift" class="text-lg"></iconify-icon>
+                            SwiftUI
+                        </span>
+                        <!-- UIKit -->
+                        <span class="patio-tag !bg-slate-50 !border-slate-200 !text-slate-700">
+                            <iconify-icon icon="simple-icons:apple" class="text-lg"></iconify-icon>
+                            UIKit
+                        </span>
+                        <!-- Kotlin -->
+                        <span class="patio-tag !bg-purple-50 !border-purple-200 !text-purple-700">
+                            <iconify-icon icon="simple-icons:kotlin" class="text-lg"></iconify-icon>
+                            Kotlin
+                        </span>
+                        <!-- Flutter -->
+                        <span class="patio-tag !bg-sky-50 !border-sky-200 !text-sky-700">
+                            <iconify-icon icon="simple-icons:flutter" class="text-lg"></iconify-icon>
+                            Flutter
+                        </span>
+                        <!-- Dart -->
+                        <span class="patio-tag !bg-cyan-50 !border-cyan-200 !text-cyan-700">
+                            <iconify-icon icon="simple-icons:dart" class="text-lg"></iconify-icon>
+                            Dart
+                        </span>
+                        <!-- React Native -->
+                        <span class="patio-tag !bg-blue-50 !border-blue-200 !text-blue-700">
+                            <iconify-icon icon="simple-icons:react" class="text-lg"></iconify-icon>
+                            React Native
+                        </span>
+                        <!-- UI/UX -->
+                        <span class="patio-tag !bg-indigo-50 !border-indigo-200 !text-indigo-700">
+                            <iconify-icon icon="lucide:pen-tool" class="text-lg"></iconify-icon>
+                            UI/UX
+                        </span>
+                        <!-- Expo -->
+                        <span class="patio-tag !bg-gray-100 !border-gray-300 !text-gray-800">
+                            <iconify-icon icon="simple-icons:expo" class="text-lg"></iconify-icon>
+                            Expo
+                        </span>
+                        <!-- OpenAPI -->
+                        <span class="patio-tag !bg-green-50 !border-green-200 !text-green-700">
+                            <iconify-icon icon="simple-icons:openapiinitiative" class="text-lg"></iconify-icon>
+                            OpenAPI
+                        </span>
+                        <!-- GraphQL -->
+                        <span class="patio-tag !bg-fuchsia-50 !border-fuchsia-200 !text-fuchsia-700">
+                            <iconify-icon icon="simple-icons:graphql" class="text-lg"></iconify-icon>
+                            GraphQL
+                        </span>
+                        <!-- Firebase -->
+                        <span class="patio-tag !bg-amber-50 !border-amber-200 !text-amber-700">
+                            <iconify-icon icon="simple-icons:firebase" class="text-lg"></iconify-icon>
+                            Firebase
+                        </span>
+                        <!-- Supabase -->
+                        <span class="patio-tag !bg-emerald-50 !border-emerald-200 !text-emerald-700">
+                            <iconify-icon icon="simple-icons:supabase" class="text-lg"></iconify-icon>
+                            Supabase
+                        </span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- CONTACT SECTION --><section id="contact" class="w-full py-16 md:py-24 bg-violet-400 border-b-4 border-black">
-            <div class="container mx-auto px-4">
-                <div class="max-w-3xl mx-auto bg-white border-4 border-black hard-shadow-lg p-8 md:p-12 rounded-lg scroll-animate animate-pop-in">
-                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-4">
-                        Хотите обсудить проект? Пишите.
-                    </h2>
-                    <p class="text-lg mb-8">
-                    </p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono font-bold text-center">
-                        <a href="https://bit.ly/43tFnTC" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-between bg-lime-300 border-4 border-black rounded-lg p-6 hard-shadow card-pop h-full">
-                            <span class="text-sm tracking-wide mb-4">/WHATSAPP</span>
-                        </a>
-                        <a href="https://bit.ly/3JXrnuG" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-between bg-cyan-300 border-4 border-black rounded-lg p-6 hard-shadow card-pop h-full">
-                            <span class="text-sm tracking-wide mb-4">/TELEGRAM</span>
-                        </a>
-                        <a href="https://bit.ly/4pczlz1" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-between bg-pink-300 border-4 border-black rounded-lg p-6 hard-shadow card-pop h-full">
-                            <span class="text-sm tracking-wide mb-4">/INSTAGRAM</span>
-                        </a>
+        <!-- CONTACT -->
+        <section id="contact" class="py-24 container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center mb-16">
+                <h2 class="text-4xl font-bold tracking-tight mb-4 text-black">Хотите обсудить проект?</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <a href="https://bit.ly/43tFnTC" target="_blank"
+                    class="patio-card p-8 flex flex-col items-center justify-center gap-4 group">
+                    <div
+                        class="w-12 h-12 flex items-center justify-center rounded-full bg-[#25D366]/10 text-[#25D366] group-hover:bg-[#25D366] group-hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="w-6 h-6">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                        </svg>
                     </div>
-                </div>
+                    <span class="font-bold group-hover:text-black transition-colors text-black">WhatsApp</span>
+                </a>
+                <a href="https://bit.ly/3JXrnuG" target="_blank"
+                    class="patio-card p-8 flex flex-col items-center justify-center gap-4 group">
+                    <div
+                        class="w-12 h-12 flex items-center justify-center rounded-full bg-[#229ED9]/10 text-[#229ED9] group-hover:bg-[#229ED9] group-hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="w-6 h-6">
+                            <path
+                                d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+                        </svg>
+                    </div>
+                    <span class="font-bold group-hover:text-black transition-colors text-black">Telegram</span>
+                </a>
+                <a href="https://bit.ly/4pczlz1" target="_blank"
+                    class="patio-card p-8 flex flex-col items-center justify-center gap-4 group">
+                    <div
+                        class="w-12 h-12 flex items-center justify-center rounded-full bg-[#E1306C]/10 text-[#E1306C] group-hover:bg-[#E1306C] group-hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="w-6 h-6">
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
+                        </svg>
+                    </div>
+                    <span class="font-bold group-hover:text-black transition-colors text-black">Instagram</span>
+                </a>
             </div>
         </section>
-
     </main>
 
-    <!-- FOOTER --><footer class="w-full py-12 bg-black text-white">
-        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-            <div class="text-2xl font-black tracking-tighter mb-4 md:mb-0">
-                🥑 Avocado Apps
+    <!-- FOOTER -->
+    <footer class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-gray-50">
+        <!-- Decorative background elements -->
+        <div class="absolute inset-0 opacity-30">
+            <div
+                class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-green-100 to-transparent rounded-full blur-3xl">
             </div>
-            <div class="text-sm font-mono">
-                &copy; 2025. Все права нарушены.
+            <div
+                class="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-blue-100 to-transparent rounded-full blur-3xl">
+            </div>
+        </div>
+
+        <div class="container mx-auto px-6 py-20 relative z-10">
+            <!-- Main Footer Content -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+                <!-- Brand Section -->
+                <div class="md:col-span-5">
+                    <div class="flex items-center gap-3 mb-6 group">
+                        <div
+                            class="w-12 h-12 relative transform transition-transform group-hover:scale-110 group-hover:rotate-12 duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+                                class="w-full h-full drop-shadow-lg" fill="none">
+                                <path
+                                    d="M50 5 C 30 5, 10 35, 10 60 C 10 82, 28 95, 50 95 C 72 95, 90 82, 90 60 C 90 35, 70 5, 50 5 Z"
+                                    fill="#386641" />
+                                <path
+                                    d="M50 15 C 35 15, 20 38, 20 60 C 20 78, 32 88, 50 88 C 68 88, 80 78, 80 60 C 80 38, 65 15, 50 15 Z"
+                                    fill="#D4E157" />
+                                <circle cx="50" cy="65" r="16" fill="#6D4C41" />
+                                <circle cx="45" cy="60" r="4" fill="#FFFFFF" fill-opacity="0.3" />
+                            </svg>
+                        </div>
+                        <span class="font-bold text-2xl text-black">Avocado Apps</span>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="flex gap-8 text-sm">
+                        <div>
+                            <div class="text-2xl font-bold text-black mb-1">50+</div>
+                            <div class="text-gray-500">Проектов</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-black mb-1">10+</div>
+                            <div class="text-gray-500">Лет опыта</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Links -->
+                <div class="md:col-span-7 flex flex-col md:items-end">
+                    <div class="flex flex-col gap-4 md:items-end">
+                        <h3 class="font-bold text-black text-lg">Соцсети</h3>
+                        <div class="flex flex-col gap-2 md:items-end">
+                            <a href="https://bit.ly/43tFnTC" target="_blank"
+                                class="text-gray-500 hover:text-black transition-colors font-medium">WhatsApp</a>
+                            <a href="https://bit.ly/3JXrnuG" target="_blank"
+                                class="text-gray-500 hover:text-black transition-colors font-medium">Telegram</a>
+                            <a href="https://bit.ly/4pczlz1" target="_blank"
+                                class="text-gray-500 hover:text-black transition-colors font-medium">Instagram</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="pt-8 border-t border-gray-200">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                    <div class="flex items-center gap-2 text-sm text-gray-500">
+                        <iconify-icon icon="lucide:copyright" class="text-base"></iconify-icon>
+                        <span class="font-mono">2025 Avocado Apps. Все права защищены.</span>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
 
+    <script>
+        // Mobile menu toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
 
-    <!-- JAVASCRIPT for animations --><script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Select all elements to animate
-            const animatedElements = document.querySelectorAll('.scroll-animate');
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
 
-            // Set up the Intersection Observer
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        // Stagger the animations slightly
-                        // You can remove this line if you don't want the stagger
-                        entry.target.style.transitionDelay = `${index * 50}ms`;
-
-                        // Add the 'is-visible' class to trigger the animation
-                        entry.target.classList.add('is-visible');
-
-                        // Stop observing the element once it's visible
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.1 // Trigger when 10% of the element is visible
+        // Close menu on click
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
             });
-
-            // Observe each animated element
-            animatedElements.forEach(el => {
-                // Set the correct animation type class
-                const animationType = el.getAttribute('data-animation') || 'slam-up';
-                el.classList.add(`animate-${animationType}`);
-
-                observer.observe(el);
-            });
-
-            // Mobile menu toggle
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                });
-
-                // Close mobile menu when clicking on a menu item
-                const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-                mobileMenuLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        mobileMenu.classList.add('hidden');
-                    });
-                });
-            }
         });
     </script>
-
 </body>
+
 </html>
