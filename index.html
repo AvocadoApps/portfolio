@@ -333,30 +333,39 @@
                 <div class="container mx-auto px-6 relative z-10 flex flex-col items-center text-center">
                     <div class="flex flex-col gap-2 md:gap-4 mb-12 items-start">
                         <h1
-                            class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[1.1] text-indigo-500 flex items-center gap-4 md:gap-6">
+                            class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[1.1] text-gray-600 flex items-center gap-4 md:gap-6">
                             <iconify-icon icon="solar:palette-bold"
                                 class="text-4xl md:text-7xl text-indigo-400 flex-shrink-0"></iconify-icon>
                             <span>Дизайн.</span>
                         </h1>
 
                         <h1
-                            class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[1.1] text-blue-500 flex items-center gap-4 md:gap-6">
+                            class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[1.1] text-gray-600 flex items-center gap-4 md:gap-6">
                             <iconify-icon icon="solar:code-square-bold"
                                 class="text-4xl md:text-7xl text-blue-400 flex-shrink-0"></iconify-icon>
                             <span>Код.</span>
                         </h1>
 
                         <h1
-                            class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[1.1] text-emerald-500 flex items-center gap-4 md:gap-6">
+                            class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[1.1] text-gray-600 flex items-center gap-4 md:gap-6">
                             <iconify-icon icon="solar:smartphone-2-bold"
                                 class="text-4xl md:text-7xl text-emerald-400 flex-shrink-0"></iconify-icon>
                             <span>Продукт.</span>
                         </h1>
                     </div>
 
-                    <p class="text-xl md:text-2xl text-gray-600 max-w-2xl mx-auto leading-relaxed font-medium">
+                    <p class="text-xl md:text-2xl text-gray-600 max-w-2xl mx-auto leading-relaxed font-medium mb-10">
                         Создаём быстрые, стабильные и красивые приложения для бизнеса и пользователей.
                     </p>
+
+                    <button onclick="openCalculator()"
+                        class="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-200 bg-gray-900 font-brand rounded-full hover:bg-gray-800 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 ring-offset-white">
+                        <span class="mr-2 text-lg">Рассчитать стоимость</span>
+                        <iconify-icon icon="solar:calculator-minimalistic-bold" class="text-xl transition-transform group-hover:rotate-12"></iconify-icon>
+                        <div
+                            class="absolute -inset-3 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-20 blur-lg transition-opacity duration-200 group-hover:opacity-40">
+                        </div>
+                    </button>
                 </div>
             </section>
 
@@ -1176,6 +1185,800 @@
                 });
             });
         </script>
+    <!-- CALCULATOR MODAL -->
+    <div id="calculator-modal" class="fixed inset-0 z-[9999] hidden" aria-labelledby="modal-title" role="dialog"
+        aria-modal="true">
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity opacity-0" id="modal-backdrop">
+        </div>
+
+        <div class="fixed inset-0 z-10 overflow-y-auto pt-16 md:pt-0">
+            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                <!-- Modal Panel -->
+                <div class="relative transform overflow-hidden rounded-3xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-4xl opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    id="modal-panel">
+                    <button onclick="closeCalculator()" class="absolute top-4 right-4 z-10 text-gray-400 hover:text-gray-600 transition-colors">
+                        <iconify-icon icon="solar:close-circle-bold" class="text-2xl"></iconify-icon>
+                    </button>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 h-auto md:h-[80vh] md:max-h-[900px] overflow-hidden rounded-3xl">
+                        <!-- Left Side: Options -->
+                        <div class="md:col-span-2 p-6 md:p-10 md:overflow-y-auto bg-gray-50/50">
+                            <h2 class="text-3xl font-black font-brand text-gray-900 mb-2">Калькулятор проекта</h2>
+                            <p class="text-gray-500 mb-8">Выберите параметры вашего будущего приложения</p>
+
+                            <form id="calculator-form" class="space-y-10">
+                                <!-- Categories -->
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                        <iconify-icon icon="solar:layers-minimalistic-bold" class="text-indigo-600"></iconify-icon>
+                                        Тип проекта
+                                    </h3>
+                                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-3">
+                                        <label class="cursor-pointer group relative">
+                                            <input type="radio" name="category" value="ecommerce" class="peer sr-only" onchange="selectCategory('ecommerce')">
+                                            <div class="p-3 rounded-xl bg-white border-2 border-gray-200 hover:border-indigo-200 peer-checked:border-indigo-500 peer-checked:bg-indigo-50 transition-all text-center h-full flex flex-col items-center justify-center gap-1">
+                                                <iconify-icon icon="solar:cart-large-2-bold" class="text-xl text-gray-400 peer-checked:text-indigo-600"></iconify-icon>
+                                                <div class="flex flex-col gap-0.5">
+                                                    <span class="text-[11px] font-black text-gray-800 leading-tight peer-checked:text-indigo-900">Маркетплейс / eCommerce</span>
+                                                    <span class="text-[10px] text-gray-500 leading-tight">Каталог, корзина, оплата</span>
+                                                </div>
+                                            </div>
+                                        </label>
+
+                                        <label class="cursor-pointer group relative">
+                                            <input type="radio" name="category" value="services" class="peer sr-only" onchange="selectCategory('services')">
+                                            <div class="p-3 rounded-xl bg-white border-2 border-gray-200 hover:border-orange-200 peer-checked:border-orange-500 peer-checked:bg-orange-50 transition-all text-center h-full flex flex-col items-center justify-center gap-1">
+                                                <iconify-icon icon="solar:map-point-bold" class="text-xl text-gray-400 peer-checked:text-orange-600"></iconify-icon>
+                                                <div class="flex flex-col gap-0.5">
+                                                    <span class="text-[11px] font-black text-gray-800 leading-tight peer-checked:text-orange-900">Доставка / Услуги</span>
+                                                    <span class="text-[10px] text-gray-500 leading-tight">Доставка, бронь, курьеры</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label class="cursor-pointer group relative">
+                                            <input type="radio" name="category" value="education" class="peer sr-only" onchange="selectCategory('education')">
+                                            <div class="p-3 rounded-xl bg-white border-2 border-gray-200 hover:border-teal-200 peer-checked:border-teal-500 peer-checked:bg-teal-50 transition-all text-center h-full flex flex-col items-center justify-center gap-1">
+                                                <iconify-icon icon="solar:book-bookmark-bold" class="text-xl text-gray-400 peer-checked:text-teal-600"></iconify-icon>
+                                                <div class="flex flex-col gap-0.5">
+                                                    <span class="text-[11px] font-black text-gray-800 leading-tight peer-checked:text-teal-900">Онлайн-обучение</span>
+                                                    <span class="text-[10px] text-gray-500 leading-tight">Курсы, уроки, личный кабинет</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label class="cursor-pointer group relative">
+                                            <input type="radio" name="category" value="community" class="peer sr-only" onchange="selectCategory('community')">
+                                            <div class="p-3 rounded-xl bg-white border-2 border-gray-200 hover:border-fuchsia-200 peer-checked:border-fuchsia-500 peer-checked:bg-fuchsia-50 transition-all text-center h-full flex flex-col items-center justify-center gap-1">
+                                                <iconify-icon icon="solar:users-group-rounded-bold" class="text-xl text-gray-400 peer-checked:text-fuchsia-600"></iconify-icon>
+                                                    <div class="flex flex-col gap-0.5">
+                                                        <span class="text-[11px] font-black text-gray-800 leading-tight peer-checked:text-fuchsia-900">Сообщество / Соцсеть</span>
+                                                        <span class="text-[10px] text-gray-500 leading-tight">Чаты, лента, профили</span>
+                                                    </div>
+                                            </div>
+                                        </label>
+                                        <label class="cursor-pointer group relative">
+                                            <input type="radio" name="category" value="b2b" class="peer sr-only" onchange="selectCategory('b2b')">
+                                            <div class="p-3 rounded-xl bg-white border-2 border-gray-200 hover:border-blue-200 peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all text-center h-full flex flex-col items-center justify-center gap-1">
+                                                <iconify-icon icon="solar:case-bold" class="text-xl text-gray-400 peer-checked:text-blue-600"></iconify-icon>
+                                                <div class="flex flex-col gap-0.5">
+                                                    <span class="text-[11px] font-black text-gray-800 leading-tight peer-checked:text-blue-900">B2B / Внутренние сервисы</span>
+                                                    <span class="text-[10px] text-gray-500 leading-tight">CRM, склад, процессы</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label class="cursor-pointer group relative">
+                                            <input type="radio" name="category" value="custom" class="peer sr-only" onchange="selectCategory('custom')" checked>
+                                            <div class="p-3 rounded-xl bg-white border-2 border-gray-200 hover:border-gray-300 peer-checked:border-gray-900 peer-checked:bg-gray-100 transition-all text-center h-full flex flex-col items-center justify-center gap-1">
+                                                <iconify-icon icon="solar:magic-stick-3-bold" class="text-xl text-gray-400 peer-checked:text-gray-900"></iconify-icon>
+                                                <div class="flex flex-col gap-0.5">
+                                                    <span class="text-[11px] font-black text-gray-800 leading-tight peer-checked:text-gray-900">Другое / Свой проект</span>
+                                                    <span class="text-[10px] text-gray-500 leading-tight">Выберу вручную</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Platform -->
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                        <iconify-icon icon="solar:smartphone-2-bold" class="text-indigo-500"></iconify-icon>
+                                        Платформа
+                                    </h3>
+                                    <div class="grid grid-cols-2 sm:grid-cols-2 gap-4">
+                                        <label class="cursor-pointer group relative">
+                                            <input type="checkbox" name="platform" value="5000" data-days="68" class="peer sr-only" data-name="iOS Приложение">
+                                            <div class="p-3 rounded-xl bg-white border-2 border-gray-200 hover:border-indigo-200 peer-checked:border-indigo-500 peer-checked:bg-indigo-50 transition-all">
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <iconify-icon icon="simple-icons:apple" class="text-xl text-gray-600 peer-checked:text-indigo-600"></iconify-icon>
+                                                    <span class="text-indigo-600 font-bold opacity-0 peer-checked:opacity-100 transition-opacity">$5,000</span>
+                                                </div>
+                                                <div class="font-bold text-gray-900 text-sm">iOS Приложение</div>
+                                                <div class="text-xs text-gray-500 mt-1">Swift / SwiftUI</div>
+                                            </div>
+                                        </label>
+
+                                        <label class="cursor-pointer group relative">
+                                            <input type="checkbox" name="platform" value="5000" data-days="68" class="peer sr-only" data-name="Android Приложение">
+                                            <div class="p-3 rounded-xl bg-white border-2 border-gray-200 hover:border-green-200 peer-checked:border-green-500 peer-checked:bg-green-50 transition-all">
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <iconify-icon icon="simple-icons:android" class="text-xl text-gray-600 peer-checked:text-green-600"></iconify-icon>
+                                                    <span class="text-green-600 font-bold opacity-0 peer-checked:opacity-100 transition-opacity">$5,000</span>
+                                                </div>
+                                                <div class="font-bold text-gray-900 text-sm">Android Приложение</div>
+                                                <div class="text-xs text-gray-500 mt-1">Kotlin / Jetpack Compose</div>
+                                            </div>
+                                        </label>
+
+                                        <label class="cursor-pointer group relative">
+                                            <input type="checkbox" name="platform" value="8000" data-days="90" class="peer sr-only" data-name="Кроссплатформа">
+                                            <div class="p-3 rounded-xl bg-white border-2 border-gray-200 hover:border-sky-200 peer-checked:border-sky-500 peer-checked:bg-sky-50 transition-all">
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <div class="flex gap-2">
+                                                        <iconify-icon icon="simple-icons:flutter" class="text-xl text-gray-600 peer-checked:text-sky-600"></iconify-icon>
+                                                        <iconify-icon icon="simple-icons:react" class="text-xl text-gray-600 peer-checked:text-sky-600"></iconify-icon>
+                                                    </div>
+                                                    <span class="text-sky-600 font-bold opacity-0 peer-checked:opacity-100 transition-opacity">$8,000</span>
+                                                </div>
+                                                <div class="font-bold text-gray-900 text-sm">Кроссплатформа</div>
+                                                <div class="text-xs text-gray-500 mt-1">Flutter / React Native</div>
+                                            </div>
+                                        </label>
+
+                                        <label class="cursor-pointer group relative">
+                                            <input type="checkbox" name="platform" value="5000" data-days="45" class="peer sr-only" data-name="Веб-приложение">
+                                            <div class="p-3 rounded-xl bg-white border-2 border-gray-200 hover:border-cyan-200 peer-checked:border-cyan-500 peer-checked:bg-cyan-50 transition-all">
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <iconify-icon icon="solar:laptop-minimalistic-bold" class="text-xl text-gray-600 peer-checked:text-cyan-600"></iconify-icon>
+                                                    <span class="text-cyan-600 font-bold opacity-0 peer-checked:opacity-100 transition-opacity">$5,000</span>
+                                                </div>
+                                                <div class="font-bold text-gray-900 text-sm">Веб-приложение</div>
+                                                <div class="text-xs text-gray-500 mt-1">React / Next.js</div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Design -->
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                        <iconify-icon icon="solar:palette-bold" class="text-pink-500"></iconify-icon>
+                                        Дизайн
+                                    </h3>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <label class="cursor-pointer group relative">
+                                            <input type="radio" name="design" value="1000" data-days="15" class="peer sr-only" data-name="Базовый дизайн">
+                                            <div class="p-3 rounded-xl bg-white border-2 border-gray-200 hover:border-pink-200 peer-checked:border-pink-500 peer-checked:bg-pink-50 transition-all">
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <iconify-icon icon="solar:ruler-pen-bold" class="text-xl text-gray-600 peer-checked:text-pink-600"></iconify-icon>
+                                                    <span class="text-pink-600 font-bold opacity-0 peer-checked:opacity-100 transition-opacity">$1,000</span>
+                                                </div>
+                                                <div class="font-bold text-gray-900 text-sm">Базовый / Шаблон</div>
+                                                <div class="text-xs text-gray-500 mt-1">Чистый, стандартный UI</div>
+                                            </div>
+                                        </label>
+
+                                        <label class="cursor-pointer group relative">
+                                            <input type="radio" name="design" value="5000" data-days="45" class="peer sr-only" data-name="Премиум дизайн">
+                                            <div class="p-3 rounded-xl bg-white border-2 border-gray-200 hover:border-purple-200 peer-checked:border-purple-500 peer-checked:bg-purple-50 transition-all">
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <iconify-icon icon="solar:magic-stick-3-bold" class="text-xl text-gray-600 peer-checked:text-purple-600"></iconify-icon>
+                                                </div>
+                                                <div class="font-bold text-gray-900 text-sm">Премиум UI/UX</div>
+                                                <div class="text-xs text-gray-500 mt-1">Уникальный, анимированный</div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Features -->
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                        <iconify-icon icon="solar:widget-5-bold" class="text-orange-500"></iconify-icon>
+                                        Функции
+                                    </h3>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        <!-- Essentials -->
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="500" data-days="8" data-name="Авторизация" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Авторизация (Email/Social)</span>
+                                        </label>
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="500" data-days="6" data-name="Push-уведомления" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Push-уведомления</span>
+                                        </label>
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="300" data-days="3" data-name="Аналитика" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Аналитика</span>
+                                        </label>
+
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="2500" data-days="23" data-name="AI Интеграция" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Интеграция ИИ</span>
+                                        </label>
+
+                                        <!-- Monetization -->
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="1000" data-days="15" data-name="Платежи" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Платежи (Apple/Google Pay / ЮKassa)</span>
+                                        </label>
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="1300" data-days="18" data-name="Рекомендации / персонализация" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Рекомендации / персонализация</span>
+                                        </label>
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="1500" data-days="21" data-name="Подписки" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Подписки (App Store / Google Play / ЮKassa)</span>
+                                        </label>
+
+                                        <!-- Social -->
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="1500" data-days="30" data-name="Чат" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Чат / Сообщения</span>
+                                        </label>
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="1500" data-days="23" data-name="Лента новостей" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Лента новостей</span>
+                                        </label>
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="800" data-days="12" data-name="Профили пользователей" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Профили пользователей</span>
+                                        </label>
+
+                                        <!-- Location -->
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="1000" data-days="15" data-name="Карты" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Карты (Google/Apple)</span>
+                                        </label>
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="1500" data-days="23" data-name="GPS Трекинг" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">GPS Трекинг</span>
+                                        </label>
+
+                                        <!-- Content -->
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="800" data-days="12" data-name="Загрузка медиа" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Загрузка фото/видео</span>
+                                        </label>
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="800" data-days="9" data-name="Поиск" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Поиск и фильтры</span>
+                                        </label>
+
+                                        <!-- Advanced -->
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="2000" data-days="30" data-name="Админ-панель" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Админ-панель</span>
+                                        </label>
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="1000" data-days="15" data-name="Мультиязычность" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Мультиязычность</span>
+                                        </label>
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="500" data-days="8" data-name="Темная тема" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Темная тема</span>
+                                        </label>
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="feature" value="1500" data-days="15" data-name="Оффлайн режим" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Оффлайн режим</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Extras -->
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                        <iconify-icon icon="solar:box-bold" class="text-teal-500"></iconify-icon>
+                                        Дополнительно
+                                    </h3>
+                                    <div class="space-y-3">
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="extra" value="20" data-days="0" data-name="Доменное имя" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Доменное имя (.com / .ru)</span>
+                                            <span class="text-xs font-bold text-gray-500">+$20</span>
+                                        </label>
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="extra" value="500" data-days="11" data-name="Публикация в сторах" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Публикация в App Store / Google Play</span>
+                                            <span class="text-xs font-bold text-gray-500">+$500</span>
+                                        </label>
+                                        <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                                            <input type="checkbox" name="extra" value="450" data-days="10" data-name="Регистрация LLC для App Store и Google Play" class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                            <span class="ml-3 flex-grow text-sm font-medium text-gray-900">Регистрация LLC для App Store и Google Play</span>
+                                            <span class="text-xs font-bold text-gray-500">+$450</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Right Side: Summary -->
+                        <div class="bg-gray-900 text-white p-6 md:p-10 flex flex-col justify-between relative overflow-hidden">
+                            <!-- Decorative blobs -->
+                            <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+                            <div class="absolute bottom-0 left-0 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+
+                            <div class="relative z-10 flex-grow flex flex-col">
+                                <h3 class="text-xl font-bold mb-6 text-gray-200">Итоговая оценка</h3>
+                                
+                                <div id="selected-items" class="space-y-2 mb-8 text-sm text-gray-400 overflow-y-auto flex-grow max-h-[400px] pr-2">
+                                    <p class="italic opacity-50">Выберите параметры слева...</p>
+                                </div>
+                            </div>
+
+                            <div class="relative z-10 border-t border-gray-800 pt-6 mt-4">
+                                <div class="flex justify-between items-end mb-4">
+                                    <div>
+                                        <div class="text-sm text-gray-400 mb-1">Срок разработки</div>
+                                        <div class="text-2xl font-bold text-white flex items-center gap-2">
+                                            <iconify-icon icon="solar:clock-circle-bold" class="text-indigo-400"></iconify-icon>
+                                            <span id="total-time">~1 месяц</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-sm text-gray-400 mb-1">Примерная стоимость</div>
+                                <div class="text-4xl md:text-5xl font-black font-brand tracking-tight flex items-baseline gap-1">
+                                    $<span id="total-price">0</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-4 leading-relaxed">
+                                    *Стоимость и сроки указаны ориентировочно, чтобы понять порядок цифр. Финальные значения посчитаем после детального ТЗ.
+                                </p>
+                                <button onclick="showContactOptions()" class="w-full mt-8 bg-white text-gray-900 font-bold py-4 px-6 rounded-xl hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
+                                    <span>Обсудить проект</span>
+                                    <iconify-icon icon="solar:arrow-right-bold"></iconify-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT MODAL -->
+    <div id="contact-modal" class="fixed inset-0 z-[10000] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity opacity-0" id="contact-backdrop"></div>
+
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center">
+                <!-- Modal Panel -->
+                <div class="relative transform overflow-hidden rounded-3xl bg-white text-left shadow-2xl transition-all sm:w-full sm:max-w-lg opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95 p-8" id="contact-panel">
+                    
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Готовы обсудить проект?</h3>
+                        <p class="text-gray-500 mb-8">Выберите удобный способ связи, и мы отправим туда предварительный расчет</p>
+                        
+                        <div class="grid grid-cols-1 gap-4 w-full">
+                            <button onclick="openMessenger('telegram')" class="p-4 rounded-xl border-2 border-[#229ED9] bg-[#229ED9]/5 hover:bg-[#229ED9] group transition-all flex items-center justify-center gap-3">
+                                <iconify-icon icon="logos:telegram" class="text-2xl group-hover:brightness-0 group-hover:invert transition-all"></iconify-icon>
+                                <span class="font-bold text-[#229ED9] group-hover:text-white transition-colors">Telegram</span>
+                            </button>
+                            
+                            <button onclick="openMessenger('whatsapp')" class="p-4 rounded-xl border-2 border-[#25D366] bg-[#25D366]/5 hover:bg-[#25D366] group transition-all flex items-center justify-center gap-3">
+                                <iconify-icon icon="logos:whatsapp-icon" class="text-2xl group-hover:brightness-0 group-hover:invert transition-all"></iconify-icon>
+                                <span class="font-bold text-[#25D366] group-hover:text-white transition-colors">WhatsApp</span>
+                            </button>
+
+                            <button onclick="openMessenger('email')" class="p-4 rounded-xl border-2 border-gray-200 hover:border-gray-900 hover:bg-gray-900 group transition-all flex items-center justify-center gap-3">
+                                <iconify-icon icon="solar:letter-bold" class="text-2xl text-gray-400 group-hover:text-white transition-colors"></iconify-icon>
+                                <span class="font-bold text-gray-600 group-hover:text-white transition-colors">Email</span>
+                            </button>
+                        </div>
+
+                        <button onclick="hideContactOptions()" class="mt-8 text-gray-400 hover:text-gray-600 font-medium text-sm flex items-center gap-1 transition-colors">
+                            <iconify-icon icon="solar:arrow-left-linear"></iconify-icon>
+                            Вернуться к расчету
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Calculator Logic
+        const modal = document.getElementById('calculator-modal');
+        const backdrop = document.getElementById('modal-backdrop');
+        const panel = document.getElementById('modal-panel');
+        const form = document.getElementById('calculator-form');
+        const totalPriceElement = document.getElementById('total-price');
+        const totalTimeElement = document.getElementById('total-time');
+        const selectedItemsContainer = document.getElementById('selected-items');
+        let hasManualFeatureChange = false;
+        const calculatorHash = '#calculator';
+        const calculatorQueryKey = 'open';
+        const calculatorQueryValue = 'calculator';
+
+        function syncCalculatorURL(isOpen) {
+            const url = new URL(window.location.href);
+            if (isOpen) {
+                url.hash = calculatorHash;
+                url.searchParams.delete(calculatorQueryKey);
+            } else {
+                if (url.hash === calculatorHash) url.hash = '';
+                url.searchParams.delete(calculatorQueryKey);
+            }
+            history.replaceState(null, '', url);
+        }
+
+        // Category Presets
+        const categoryPresets = {
+            'ecommerce': ['Авторизация', 'Платежи', 'Рекомендации / персонализация', 'Push-уведомления', 'Поиск', 'Профили пользователей'],
+            'services': ['Авторизация', 'Карты', 'GPS Трекинг', 'Платежи', 'Push-уведомления'],
+            'education': ['Авторизация', 'Загрузка медиа', 'Поиск', 'Профили пользователей', 'Подписки', 'Рекомендации / персонализация'],
+            'community': ['Авторизация', 'Чат', 'Лента новостей', 'Профили пользователей', 'Push-уведомления', 'Загрузка медиа'],
+            'b2b': ['Авторизация', 'Push-уведомления', 'Мультиязычность', 'Админ-панель', 'Аналитика'],
+            'custom': []
+        };
+
+        function openCalculator() {
+            modal.classList.remove('hidden');
+            // Small delay to allow display:block to apply before opacity transition
+            setTimeout(() => {
+                backdrop.classList.remove('opacity-0');
+                panel.classList.remove('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
+                panel.classList.add('opacity-100', 'translate-y-0', 'sm:scale-100');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+            calculateTotal(); // Initial calculation
+            syncCalculatorURL(true);
+        }
+
+        function closeCalculator() {
+            backdrop.classList.add('opacity-0');
+            panel.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
+            panel.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+                hideContactOptions(); // Reset overlay state
+                syncCalculatorURL(false);
+            }, 300);
+        }
+
+        // Close on backdrop click
+        backdrop.addEventListener('click', closeCalculator);
+
+        // Select Category
+        function selectCategory(category) {
+            // If custom, do nothing to features (manual mode)
+            if (category === 'custom') {
+                calculateTotal();
+                return;
+            }
+
+            // If user has manually changed features, do NOT apply preset
+            if (hasManualFeatureChange) {
+                calculateTotal();
+                return;
+            }
+
+            const features = categoryPresets[category] || [];
+            
+            // Uncheck all features first
+            form.querySelectorAll('input[name="feature"]').forEach(input => {
+                input.checked = false;
+            });
+
+            // Check preset features
+            features.forEach(featureName => {
+                const input = form.querySelector(`input[name="feature"][data-name="${featureName}"]`);
+                if (input) input.checked = true;
+            });
+
+            calculateTotal();
+        }
+
+        // Calculate Total
+        function calculateTotal() {
+            let total = 0;
+            let totalDays = 0;
+            const selectedItems = [];
+
+            // Platforms
+            const platforms = form.querySelectorAll('input[name="platform"]:checked');
+            platforms.forEach(input => {
+                total += parseInt(input.value);
+                totalDays += parseInt(input.dataset.days);
+                selectedItems.push({ name: input.dataset.name, price: parseInt(input.value) });
+            });
+
+            // Design
+            const design = form.querySelector('input[name="design"]:checked');
+            if (design) {
+                total += parseInt(design.value);
+                totalDays += parseInt(design.dataset.days);
+                selectedItems.push({ name: design.dataset.name, price: parseInt(design.value) });
+            }
+
+            // Features
+            const features = form.querySelectorAll('input[name="feature"]:checked');
+            features.forEach(input => {
+                total += parseInt(input.value);
+                totalDays += parseInt(input.dataset.days);
+                // Show price for features in summary
+                selectedItems.push({ name: input.dataset.name, price: parseInt(input.value) });
+            });
+
+            // Extras
+            const extras = form.querySelectorAll('input[name="extra"]:checked');
+            extras.forEach(input => {
+                total += parseInt(input.value);
+                totalDays += parseInt(input.dataset.days);
+                selectedItems.push({ name: input.dataset.name, price: parseInt(input.value) });
+            });
+
+            // Check if at least one platform or design is selected
+            const hasPlatformOrDesign = platforms.length > 0 || design;
+            
+            // Elements to toggle
+            const summaryFooter = document.querySelector('.relative.z-10.border-t.border-gray-800.pt-6.mt-4');
+            const listContainer = document.getElementById('selected-items');
+            const listHeader = listContainer.previousElementSibling; // h3
+            const topContainer = listContainer.parentElement;
+            
+            // Footer elements
+            const timeSection = summaryFooter.querySelector('.flex.justify-between.items-end.mb-4');
+            const priceLabel = summaryFooter.querySelector('.text-sm.text-gray-400.mb-1');
+            const priceValue = summaryFooter.querySelector('.text-4xl.md\\:text-5xl.font-black');
+            const disclaimer = summaryFooter.querySelector('p.text-xs.text-gray-500');
+
+            // Create or get message element
+            let messageEl = document.getElementById('empty-selection-message');
+            if (!messageEl) {
+                messageEl = document.createElement('div');
+                messageEl.id = 'empty-selection-message';
+                messageEl.className = 'text-center text-gray-400 italic text-lg px-4';
+                messageEl.innerText = 'Выберите платформу или дизайн, чтобы увидеть расчет';
+            }
+
+            // Always show footer details structure
+            if (timeSection) timeSection.style.display = 'flex';
+            if (priceLabel) priceLabel.style.display = 'block';
+            if (priceValue) priceValue.style.display = 'flex';
+            if (disclaimer) disclaimer.style.display = 'block';
+
+            if (!hasPlatformOrDesign) {
+                // Hide List and Header
+                listContainer.style.display = 'none';
+                listHeader.style.display = 'none';
+                
+                // Center the message in the top container
+                topContainer.classList.add('justify-center', 'items-center');
+                if (!topContainer.contains(messageEl)) {
+                    topContainer.appendChild(messageEl);
+                }
+                messageEl.style.display = 'block';
+
+                // Redact values
+                totalTimeElement.innerText = '—';
+                totalPriceElement.innerText = '—';
+                
+                // Add blur effect for "redacted" look
+                totalTimeElement.classList.add('blur-sm', 'opacity-50');
+                totalPriceElement.classList.add('blur-sm', 'opacity-50');
+            } else {
+                // Show List and Header
+                listContainer.style.display = 'block';
+                listHeader.style.display = 'block';
+                
+                // Reset top container
+                topContainer.classList.remove('justify-center', 'items-center');
+                if (topContainer.contains(messageEl)) {
+                    topContainer.removeChild(messageEl);
+                }
+                
+                // Remove blur effect
+                totalTimeElement.classList.remove('blur-sm', 'opacity-50');
+                totalPriceElement.classList.remove('blur-sm', 'opacity-50');
+
+                // Animate Price
+                // Handle case where previous text was non-numeric
+                const startVal = parseInt(totalPriceElement.innerText.replace(/,/g, '')) || 0;
+                animateValue(totalPriceElement, startVal, total, 500);
+                
+                // Update Time with slight reduction for optimistic delivery
+                const adjustedDays = Math.round(totalDays * 0.7);
+                updateTime(adjustedDays);
+            }
+
+            // Update Summary List
+            updateSummary(selectedItems);
+        }
+
+        function updateTime(days) {
+            if (days === 0) {
+                totalTimeElement.innerText = "-";
+                return;
+            }
+            const months = Math.ceil(days / 30);
+            totalTimeElement.innerText = `~${months} мес.`;
+        }
+
+        function updateSummary(items) {
+            if (items.length === 0) {
+                selectedItemsContainer.innerHTML = '<p class="italic opacity-50">Выберите параметры слева...</p>';
+                return;
+            }
+
+            selectedItemsContainer.innerHTML = items.map(item => `
+                <div class="flex justify-between items-center animate-fade-in-up">
+                    <span>${item.name}</span>
+                    ${item.price !== null ? `<span class="font-mono opacity-70">$${item.price.toLocaleString()}</span>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString();
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Allow deselecting design options
+        document.querySelectorAll('input[name="design"]').forEach(radio => {
+            radio.addEventListener('click', function(e) {
+                if (this.getAttribute('data-checked') === 'true') {
+                    this.checked = false;
+                    this.setAttribute('data-checked', 'false');
+                    calculateTotal();
+                } else {
+                    document.querySelectorAll('input[name="design"]').forEach(r => r.setAttribute('data-checked', 'false'));
+                    this.setAttribute('data-checked', 'true');
+                    calculateTotal();
+                }
+            });
+        });
+
+        // Add event listeners to all inputs
+        form.addEventListener('change', (e) => {
+            if (e.target.name === 'platform') {
+                handlePlatformExclusivity(e.target);
+            }
+            
+            // If user manually changes a feature, switch category to Custom and set lock
+            if (e.target.name === 'feature') {
+                hasManualFeatureChange = true;
+                const customRadio = form.querySelector('input[name="category"][value="custom"]');
+                if (customRadio) customRadio.checked = true;
+            }
+
+            calculateTotal();
+        });
+
+        function handlePlatformExclusivity(changedInput) {
+            const platforms = Array.from(form.querySelectorAll('input[name="platform"]'));
+            const iosInput = platforms.find(p => p.dataset.name === 'iOS Приложение');
+            const androidInput = platforms.find(p => p.dataset.name === 'Android Приложение');
+            const crossPlatformInput = platforms.find(p => p.dataset.name === 'Кроссплатформа');
+            const webInput = platforms.find(p => p.dataset.name === 'Веб-приложение');
+
+            if (changedInput.checked) {
+                // Web can be combined with anything, so we ignore it for exclusivity checks
+                if (changedInput === webInput) return;
+
+                if (changedInput === crossPlatformInput) {
+                    // Cross-Platform selected: uncheck other mobile options
+                    iosInput.checked = false;
+                    androidInput.checked = false;
+                } else if (changedInput === iosInput || changedInput === androidInput) {
+                    // Native selected: uncheck cross-platform mobile options
+                    crossPlatformInput.checked = false;
+                }
+            }
+        }
+
+        // Contact Options Logic
+        const contactModal = document.getElementById('contact-modal');
+        const contactBackdrop = document.getElementById('contact-backdrop');
+        const contactPanel = document.getElementById('contact-panel');
+
+        function showContactOptions() {
+            contactModal.classList.remove('hidden');
+            // Small delay for transition
+            setTimeout(() => {
+                contactBackdrop.classList.remove('opacity-0');
+                contactPanel.classList.remove('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
+                contactPanel.classList.add('opacity-100', 'translate-y-0', 'sm:scale-100');
+            }, 10);
+        }
+
+        function hideContactOptions() {
+            contactBackdrop.classList.add('opacity-0');
+            contactPanel.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
+            contactPanel.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
+            
+            setTimeout(() => {
+                contactModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Close contact modal on backdrop click
+        contactBackdrop.addEventListener('click', hideContactOptions);
+
+        function getCalculatorMessage() {
+            const category = document.querySelector('input[name="category"]:checked').value;
+            const categoryMap = {
+                'ecommerce': 'Маркетплейс / eCommerce',
+                'services': 'Доставка / Услуги',
+                'education': 'Онлайн-обучение',
+                'community': 'Сообщество / Соцсеть',
+                'b2b': 'B2B / Внутренние сервисы',
+                'custom': 'Другое / Свой проект'
+            };
+            const categoryName = categoryMap[category] || category;
+
+            let message = `\n\n-----\n\n`;
+            message += `Тип: ${categoryName}\n`;
+            
+            // Platforms
+            const platforms = Array.from(document.querySelectorAll('input[name="platform"]:checked'))
+                .map(i => `- ${i.dataset.name}`)
+                .join('\n');
+            if (platforms) message += `\nПлатформы:\n${platforms}\n`;
+
+            // Design
+            const design = document.querySelector('input[name="design"]:checked');
+            if (design) message += `\nДизайн: ${design.dataset.name}\n`;
+
+            // Features
+            const features = Array.from(document.querySelectorAll('input[name="feature"]:checked'))
+                .map(i => `- ${i.dataset.name}`)
+                .join('\n');
+            if (features) message += `\nФункции:\n${features}\n`;
+
+            // Extras
+            const extras = Array.from(document.querySelectorAll('input[name="extra"]:checked'))
+                .map(i => `- ${i.dataset.name}`)
+                .join('\n');
+            if (extras) message += `\nДополнительно:\n${extras}\n`;
+
+            return encodeURIComponent(message);
+        }
+
+        function openMessenger(type) {
+            const message = getCalculatorMessage();
+            let url = '';
+
+            switch(type) {
+                case 'telegram':
+                    url = `https://t.me/avoc0der?text=${message}`;
+                    break;
+                case 'whatsapp':
+                    url = `https://wa.me/+79286404000?text=${message}`;
+                    break;
+                case 'email':
+                    url = `mailto:hello@avocado.apps?subject=Обсуждение проекта&body=${message}`;
+                    break;
+            }
+
+            if (url) window.open(url, '_blank');
+        }
+
+        function handleCalculatorDeepLink() {
+            const url = new URL(window.location.href);
+            const wantsCalculator =
+                url.hash === calculatorHash ||
+                url.searchParams.get(calculatorQueryKey) === calculatorQueryValue;
+            if (wantsCalculator) {
+                openCalculator();
+            }
+        }
+
+        window.addEventListener('load', handleCalculatorDeepLink);
+    </script>
 </body>
 
 </html>
