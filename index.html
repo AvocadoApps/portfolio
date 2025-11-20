@@ -1345,10 +1345,22 @@
                                         <iconify-icon icon="solar:palette-bold" class="text-pink-500"></iconify-icon>
                                         Дизайн
                                     </h3>
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                        <label class="cursor-pointer group relative">
+                                            <input type="radio" name="design" value="0" data-days="0" class="peer sr-only" data-name="Есть макет" checked>
+                                            <div class="p-3 rounded-xl bg-white border-2 border-gray-200 hover:border-gray-300 peer-checked:border-gray-900 peer-checked:bg-gray-50 transition-all h-full">
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <iconify-icon icon="solar:file-check-bold" class="text-xl text-gray-600 peer-checked:text-gray-900"></iconify-icon>
+                                                    <span class="text-gray-900 font-bold opacity-0 peer-checked:opacity-100 transition-opacity">$0</span>
+                                                </div>
+                                                <div class="font-bold text-gray-900 text-sm">Есть макет</div>
+                                                <div class="text-xs text-gray-500 mt-1">Дизайн уже готов</div>
+                                            </div>
+                                        </label>
+
                                         <label class="cursor-pointer group relative">
                                             <input type="radio" name="design" value="1000" data-days="15" class="peer sr-only" data-name="Базовый дизайн">
-                                            <div class="p-3 rounded-xl bg-white border-2 border-gray-200 hover:border-pink-200 peer-checked:border-pink-500 peer-checked:bg-pink-50 transition-all">
+                                            <div class="p-3 rounded-xl bg-white border-2 border-gray-200 hover:border-pink-200 peer-checked:border-pink-500 peer-checked:bg-pink-50 transition-all h-full">
                                                 <div class="flex items-center justify-between mb-2">
                                                     <iconify-icon icon="solar:ruler-pen-bold" class="text-xl text-gray-600 peer-checked:text-pink-600"></iconify-icon>
                                                     <span class="text-pink-600 font-bold opacity-0 peer-checked:opacity-100 transition-opacity">$1,000</span>
@@ -1360,9 +1372,10 @@
 
                                         <label class="cursor-pointer group relative">
                                             <input type="radio" name="design" value="5000" data-days="45" class="peer sr-only" data-name="Премиум дизайн">
-                                            <div class="p-3 rounded-xl bg-white border-2 border-gray-200 hover:border-purple-200 peer-checked:border-purple-500 peer-checked:bg-purple-50 transition-all">
+                                            <div class="p-3 rounded-xl bg-white border-2 border-gray-200 hover:border-purple-200 peer-checked:border-purple-500 peer-checked:bg-purple-50 transition-all h-full">
                                                 <div class="flex items-center justify-between mb-2">
                                                     <iconify-icon icon="solar:magic-stick-3-bold" class="text-xl text-gray-600 peer-checked:text-purple-600"></iconify-icon>
+                                                    <span class="text-purple-600 font-bold opacity-0 peer-checked:opacity-100 transition-opacity">$5,000</span>
                                                 </div>
                                                 <div class="font-bold text-gray-900 text-sm">Премиум UI/UX</div>
                                                 <div class="text-xs text-gray-500 mt-1">Уникальный, анимированный</div>
@@ -1550,7 +1563,7 @@
                     
                     <div class="flex flex-col items-center text-center">
                         <h3 class="text-2xl font-bold text-gray-900 mb-2">Готовы обсудить проект?</h3>
-                        <p class="text-gray-500 mb-8">Выберите удобный способ связи, и мы отправим туда предварительный расчет</p>
+                        <br>
                         
                         <div class="grid grid-cols-1 gap-4 w-full">
                             <button onclick="openMessenger('telegram')" class="p-4 rounded-xl border-2 border-[#229ED9] bg-[#229ED9]/5 hover:bg-[#229ED9] group transition-all flex items-center justify-center gap-3">
@@ -1614,6 +1627,22 @@
             'b2b': ['Авторизация', 'Push-уведомления', 'Мультиязычность', 'Админ-панель', 'Аналитика'],
             'custom': []
         };
+        // Features that only make sense with development (disable when only design is selected)
+        const devOnlyFeatures = new Set([
+            'Аналитика',
+            'AI Интеграция',
+            'Платежи',
+            'Рекомендации / персонализация',
+            'Подписки',
+            'Чат',
+            'Лента новостей',
+            'Карты',
+            'GPS Трекинг',
+            'Загрузка медиа',
+            'Админ-панель',
+            'Оффлайн режим',
+            'Push-уведомления'
+        ]);
 
         function openCalculator() {
             modal.classList.remove('hidden');
@@ -1676,45 +1705,101 @@
 
         // Calculate Total
         function calculateTotal() {
-            let total = 0;
-            let totalDays = 0;
             const selectedItems = [];
+            let designCost = 0;
+            let designDays = 0;
+            let developmentCost = 0;
+            let developmentDays = 0;
 
             // Platforms
             const platforms = form.querySelectorAll('input[name="platform"]:checked');
             platforms.forEach(input => {
-                total += parseInt(input.value);
-                totalDays += parseInt(input.dataset.days);
+                developmentCost += parseInt(input.value);
+                developmentDays += parseInt(input.dataset.days);
                 selectedItems.push({ name: input.dataset.name, price: parseInt(input.value) });
             });
+            const hasDevelopment = platforms.length > 0;
+            updateFeatureAvailability(hasDevelopment);
 
             // Design
             const design = form.querySelector('input[name="design"]:checked');
             if (design) {
-                total += parseInt(design.value);
-                totalDays += parseInt(design.dataset.days);
+                designCost += parseInt(design.value);
+                designDays += parseInt(design.dataset.days);
                 selectedItems.push({ name: design.dataset.name, price: parseInt(design.value) });
             }
 
             // Features
             const features = form.querySelectorAll('input[name="feature"]:checked');
+            let featuresTotal = 0;
+            let featureDays = 0;
             features.forEach(input => {
-                total += parseInt(input.value);
-                totalDays += parseInt(input.dataset.days);
-                // Show price for features in summary
-                selectedItems.push({ name: input.dataset.name, price: parseInt(input.value) });
+                const price = parseInt(input.value);
+                featuresTotal += price;
+                featureDays += parseInt(input.dataset.days);
             });
 
             // Extras
             const extras = form.querySelectorAll('input[name="extra"]:checked');
+            let extrasTotal = 0;
+            let extrasDays = 0;
             extras.forEach(input => {
-                total += parseInt(input.value);
-                totalDays += parseInt(input.dataset.days);
-                selectedItems.push({ name: input.dataset.name, price: parseInt(input.value) });
+                extrasTotal += parseInt(input.value);
+                extrasDays += parseInt(input.dataset.days);
             });
 
-            // Check if at least one platform or design is selected
-            const hasPlatformOrDesign = platforms.length > 0 || design;
+            const featureCount = features.length;
+
+            if (hasDevelopment) {
+                // Apply complexity to feature scope only (not to platforms/extras)
+                const complexityThreshold = 4;
+                const complexityRate = 0.06; // 6% per extra feature after threshold
+                const complexityMultiplier = 1 + Math.max(0, (featureCount - complexityThreshold) * complexityRate);
+
+                const featureCostWithComplexity = Math.round(featuresTotal * complexityMultiplier);
+                const featureDaysWithComplexity = Math.round(featureDays * complexityMultiplier);
+
+                developmentCost += featureCostWithComplexity + extrasTotal;
+                developmentDays += featureDaysWithComplexity + extrasDays;
+
+                if (featureCount > 0) {
+                    selectedItems.push({
+                        name: `Функции (${featureCount})`,
+                        price: featureCostWithComplexity
+                    });
+                }
+
+                if (extras.length > 0) {
+                    extras.forEach(input => {
+                        selectedItems.push({ name: input.dataset.name, price: parseInt(input.value) });
+                    });
+                }
+            } else {
+                // Design-only scenario: features influence UX scope modestly, not full dev cost
+                const designFeatureCost = Math.round(featuresTotal * 0.25);
+                const designFeatureDays = featureCount > 0 ? Math.max(4, Math.round(featureDays * 0.45)) : 0;
+
+                designCost += designFeatureCost;
+                designDays += designFeatureDays;
+
+                if (featureCount > 0) {
+                    selectedItems.push({
+                        name: `Функции для дизайна (${featureCount})`,
+                        price: designFeatureCost
+                    });
+                }
+            }
+
+            const total = designCost + developmentCost;
+
+            // Smarter timeline: design and development partially overlap
+            const combinedDays = hasDevelopment
+                ? Math.round(developmentDays + Math.round(designDays * 0.6))
+                : designDays;
+
+            // Check if at least one platform or design (paid) is selected
+            // "Design provided" has value 0, so we check if design value > 0
+            const hasPlatformOrDesign = platforms.length > 0 || (design && parseInt(design.value) > 0) || featureCount > 0 || extras.length > 0;
             
             // Elements to toggle
             const summaryFooter = document.querySelector('.relative.z-10.border-t.border-gray-800.pt-6.mt-4');
@@ -1783,7 +1868,7 @@
                 animateValue(totalPriceElement, startVal, total, 500);
                 
                 // Update Time with slight reduction for optimistic delivery
-                const adjustedDays = Math.round(totalDays * 0.7);
+                const adjustedDays = Math.round(combinedDays * 0.85);
                 updateTime(adjustedDays);
             }
 
@@ -1827,21 +1912,6 @@
             window.requestAnimationFrame(step);
         }
 
-        // Allow deselecting design options
-        document.querySelectorAll('input[name="design"]').forEach(radio => {
-            radio.addEventListener('click', function(e) {
-                if (this.getAttribute('data-checked') === 'true') {
-                    this.checked = false;
-                    this.setAttribute('data-checked', 'false');
-                    calculateTotal();
-                } else {
-                    document.querySelectorAll('input[name="design"]').forEach(r => r.setAttribute('data-checked', 'false'));
-                    this.setAttribute('data-checked', 'true');
-                    calculateTotal();
-                }
-            });
-        });
-
         // Add event listeners to all inputs
         form.addEventListener('change', (e) => {
             if (e.target.name === 'platform') {
@@ -1857,6 +1927,32 @@
 
             calculateTotal();
         });
+
+        function updateFeatureAvailability(hasDevelopment) {
+            form.querySelectorAll('input[name="feature"]').forEach(input => {
+                const label = input.closest('label');
+                const isDevOnly = devOnlyFeatures.has(input.dataset.name);
+                const badge = label ? label.querySelector('.dev-only-badge') : null;
+
+                if (!hasDevelopment && isDevOnly) {
+                    input.checked = false;
+                    input.disabled = true;
+                    if (label) {
+                        label.classList.add('opacity-50', 'cursor-not-allowed');
+                    }
+                } else {
+                    input.disabled = false;
+                    if (label) {
+                        label.classList.remove('opacity-50', 'cursor-not-allowed');
+                    }
+                }
+
+                // Remove any existing badge if present (cleanup from previous version)
+                if (badge) {
+                    badge.remove();
+                }
+            });
+        }
 
         function handlePlatformExclusivity(changedInput) {
             const platforms = Array.from(form.querySelectorAll('input[name="platform"]'));
@@ -1978,6 +2074,20 @@
         }
 
         window.addEventListener('load', handleCalculatorDeepLink);
+
+        // Close modals on ESC key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const contactModal = document.getElementById('contact-modal');
+                const calculatorModal = document.getElementById('calculator-modal');
+
+                if (contactModal && !contactModal.classList.contains('hidden')) {
+                    hideContactOptions();
+                } else if (calculatorModal && !calculatorModal.classList.contains('hidden')) {
+                    closeCalculator();
+                }
+            }
+        });
     </script>
 </body>
 
