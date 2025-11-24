@@ -43,6 +43,10 @@
                 });
             }
         });
+
+        // Expose to global scope for other scripts
+        window.firebaseAnalytics = analytics;
+        window.logEvent = logEvent;
     </script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 
@@ -1645,6 +1649,9 @@
         ]);
 
         function openCalculator() {
+            if (window.logEvent && window.firebaseAnalytics) {
+                window.logEvent(window.firebaseAnalytics, 'calculator_open');
+            }
             modal.classList.remove('hidden');
             // Small delay to allow display:block to apply before opacity transition
             setTimeout(() => {
@@ -1658,6 +1665,9 @@
         }
 
         function closeCalculator() {
+            if (window.logEvent && window.firebaseAnalytics) {
+                window.logEvent(window.firebaseAnalytics, 'calculator_close');
+            }
             backdrop.classList.add('opacity-0');
             panel.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
             panel.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
@@ -1675,6 +1685,11 @@
 
         // Select Category
         function selectCategory(category) {
+            if (window.logEvent && window.firebaseAnalytics) {
+                window.logEvent(window.firebaseAnalytics, 'calculator_category_select', {
+                    category: category
+                });
+            }
             // If custom, do nothing to features (manual mode)
             if (category === 'custom') {
                 calculateTotal();
@@ -1982,6 +1997,31 @@
         const contactPanel = document.getElementById('contact-panel');
 
         function showContactOptions() {
+            if (window.logEvent && window.firebaseAnalytics) {
+                const totalPrice = document.getElementById('total-price').innerText;
+                const totalTime = document.getElementById('total-time').innerText;
+                
+                // Gather state for analytics
+                const categoryInput = document.querySelector('input[name="category"]:checked');
+                const category = categoryInput ? categoryInput.value : 'unknown';
+                
+                const platforms = Array.from(document.querySelectorAll('input[name="platform"]:checked'))
+                    .map(i => i.dataset.name);
+                    
+                const designInput = document.querySelector('input[name="design"]:checked');
+                const design = designInput ? designInput.dataset.name : 'none';
+                
+                const featureCount = document.querySelectorAll('input[name="feature"]:checked').length;
+
+                window.logEvent(window.firebaseAnalytics, 'calculator_discuss_click', {
+                    total_price: totalPrice,
+                    total_time: totalTime,
+                    category: category,
+                    platforms: platforms.join(', '),
+                    design: design,
+                    feature_count: featureCount
+                });
+            }
             contactModal.classList.remove('hidden');
             // Small delay for transition
             setTimeout(() => {
@@ -1992,6 +2032,9 @@
         }
 
         function hideContactOptions() {
+            if (window.logEvent && window.firebaseAnalytics) {
+                window.logEvent(window.firebaseAnalytics, 'contact_options_close');
+            }
             contactBackdrop.classList.add('opacity-0');
             contactPanel.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
             contactPanel.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
@@ -2045,6 +2088,11 @@
         }
 
         function openMessenger(type) {
+            if (window.logEvent && window.firebaseAnalytics) {
+                window.logEvent(window.firebaseAnalytics, 'contact_select', {
+                    contact_method: type
+                });
+            }
             const message = getCalculatorMessage();
             let url = '';
 
