@@ -1897,7 +1897,11 @@
                 return;
             }
             const months = Math.ceil(days / 30);
-            totalTimeElement.innerText = `~${months} мес.`;
+            if (months >= 6) {
+                totalTimeElement.innerText = '6+ мес.';
+            } else {
+                totalTimeElement.innerText = `~${months} мес.`;
+            }
         }
 
         function updateSummary(items) {
